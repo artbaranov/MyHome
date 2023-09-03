@@ -22,6 +22,14 @@ private val LargeTitle = TextStyle(
     fontSize = 21.sp
 )
 
+private val TitleMedium = TextStyle(
+    fontFamily = Circe,
+    fontWeight = FontWeight.Light,
+    fontSize = 17.sp,
+)
+
+
 val MyHomeTypography = Typography(
-    titleLarge = LargeTitle
+    titleLarge = LargeTitle,
+    titleMedium = TitleMedium,
 )
