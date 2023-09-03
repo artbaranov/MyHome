@@ -1,21 +1,16 @@
 package com.genzo.myhome.ui.screens.home
 
-import android.content.res.Configuration
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.genzo.myhome.R
-import com.genzo.myhome.ui.theme.MyHomeTheme
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,18 +22,12 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                 .fillMaxSize()
                 .padding(paddings)
         ) {
-            Title(title = stringResource(id = R.string.Home_Title))
+
         }
     })
 }
 
-@Composable
-private fun Title(
-    modifier: Modifier = Modifier,
-    title: String
-) {
-    Text(text = title, modifier = modifier, style = MyHomeTheme.typography.titleLarge)
-}
+
 
 
 @Preview
