@@ -1,4 +1,4 @@
-package com.genzo.myhome.ui.screens.home
+package com.genzo.myhome.ui.sections
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column

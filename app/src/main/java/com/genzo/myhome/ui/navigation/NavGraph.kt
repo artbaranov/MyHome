@@ -3,8 +3,8 @@ package com.genzo.myhome.ui.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.genzo.myhome.ui.screens.home.CamerasSection
-import com.genzo.myhome.ui.screens.home.DoorsSection
+import com.genzo.myhome.ui.sections.CamerasSection
+import com.genzo.myhome.ui.sections.DoorsSection
 
 fun NavGraphBuilder.navGraph(
     navController: NavController
