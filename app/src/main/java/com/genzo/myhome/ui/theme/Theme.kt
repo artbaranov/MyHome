@@ -25,6 +25,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
+    onPrimary = MainTextColor,
     primary = Purple40,
     secondary = PurpleGrey40,
     tertiary = Pink40
@@ -34,7 +35,8 @@ object MyHomeTheme {
     val typography: Typography
         @Composable
         @ReadOnlyComposable
-            get() = MyHomeTypography
+        get() = MyHomeTypography
+
 }
 
 @Composable
