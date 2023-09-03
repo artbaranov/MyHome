@@ -1,19 +1,18 @@
 package com.genzo.myhome.ui.navigation
 
-import androidx.navigation.NavController
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.genzo.myhome.ui.sections.CamerasSection
 import com.genzo.myhome.ui.sections.DoorsSection
 
-fun NavGraphBuilder.navGraph(
-    navController: NavController
-) {
+fun NavGraphBuilder.navGraph() {
     composable(Screen.CAMERAS.route) {
-        CamerasSection()
+        CamerasSection(modifier = Modifier.fillMaxSize())
     }
 
     composable(Screen.DOORS.route) {
-        DoorsSection()
+        DoorsSection(modifier = Modifier.fillMaxSize())
     }
 }

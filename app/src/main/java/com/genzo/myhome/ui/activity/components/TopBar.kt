@@ -37,7 +37,9 @@ fun TopBar(
     Column(modifier = modifier) {
         Title(
             title = stringResource(id = R.string.Home_Title),
-            modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 20.dp)
         )
 
         NavigationBar(navController = navController, navigationItems = navigationItems)
@@ -123,12 +125,14 @@ private fun NavigationItem(
         modifier.bottomBorder(1.dp, Color.Gray)
     }
     Text(
-        modifier = bottomBorderModifier.selectable(
-            selected = selected,
-            onClick = onClick,
-            indication = null,
-            interactionSource = interactionSource,
-        ),
+        modifier = bottomBorderModifier
+            .selectable(
+                selected = selected,
+                onClick = onClick,
+                indication = null,
+                interactionSource = interactionSource,
+            )
+            .padding(vertical = 10.dp),
         text = label,
         style = MyHomeTheme.typography.titleMedium,
         textAlign = TextAlign.Center
