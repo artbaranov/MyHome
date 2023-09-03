@@ -1,4 +1,4 @@
-package com.genzo.myhome.ui.screens.home.sections
+package com.genzo.myhome.ui.screens.home.sections.doors
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
