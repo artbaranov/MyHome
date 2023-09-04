@@ -1,6 +1,7 @@
 package com.genzo.myhome.ui.screens.home.sections.cameras
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -16,6 +17,7 @@ fun CamerasSection(modifier: Modifier = Modifier, rooms: List<Room>) {
             RoomItem(
                 title = room.title,
                 cameras = room.cameras,
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }

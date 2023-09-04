@@ -1,7 +1,9 @@
 package com.genzo.myhome.ui.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.genzo.myhome.data.entities.Camera
@@ -12,7 +14,10 @@ import com.genzo.myhome.ui.screens.home.sections.doors.DoorsSection
 fun NavGraphBuilder.navGraph() {
     composable(Screen.CAMERAS.route) {
         CamerasSection(
-            modifier = Modifier.fillMaxSize(), rooms = rooms
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 21.dp),
+            rooms = rooms
         )
     }
 
