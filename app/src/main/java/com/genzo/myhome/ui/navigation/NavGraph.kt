@@ -43,30 +43,9 @@ private val cameras = listOf(
         favorites = true,
         rec = true
     ),
-    Camera(
-        name = "Camera 3",
-        snapshot = "https://serverspace.ru/wp-content/uploads/2019/06/backup-i-snapshot.png",
-        room = "Room 1",
-        id = 3,
-        favorites = true,
-        rec = true
-    ),
-    Camera(
-        name = "Camera 4",
-        snapshot = "https://serverspace.ru/wp-content/uploads/2019/06/backup-i-snapshot.png",
-        room = "Room 1",
-        id = 4,
-        favorites = true,
-        rec = true
-    )
 )
 
 private val rooms = listOf(
     Room(title = "First room", cameras = cameras),
     Room(title = "Second room", cameras = cameras),
-    Room(title = "Third room", cameras = cameras),
-    Room(title = "Fourth room", cameras = cameras),
-    Room(title = "Fifth room", cameras = cameras),
-    Room(title = "Sixth room", cameras = cameras),
-    Room(title = "Seventh room", cameras = cameras),
 )
