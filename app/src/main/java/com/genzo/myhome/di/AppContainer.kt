@@ -1,17 +1,32 @@
 package com.genzo.myhome.di
 
-import com.genzo.myhome.data.repositories.FakeCamerasRepository
-import com.genzo.myhome.data.repositories.FakeDoorsRepository
+import com.genzo.myhome.data.repositories.CamerasRemoteDataSource
+import com.genzo.myhome.data.repositories.DoorsRemoteDataSource
+import retrofit2.Retrofit
 import com.genzo.myhome.di.factories.CamerasViewModelFactory
 import com.genzo.myhome.di.factories.DoorsViewModelFactory
 import kotlinx.coroutines.Dispatchers
+import retrofit2.converter.gson.GsonConverterFactory
 
 class AppContainer {
-    val camerasRepository = FakeCamerasRepository()
-    val doorsRepository = FakeDoorsRepository()
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("http://cars.cprogroup.ru")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
-    val uiDispatcher = Dispatchers.Main
-    val ioDispatcher = Dispatchers.IO
+    private val camerasRepository = getCamerasAPI()
+    private val doorsRepository = getDoorsApi()
+
+    private val uiDispatcher = Dispatchers.Main
+    private val ioDispatcher = Dispatchers.IO
+
+    private fun getCamerasAPI(): CamerasRemoteDataSource {
+        return retrofit.create(CamerasRemoteDataSource::class.java)
+    }
+
+    private fun getDoorsApi(): DoorsRemoteDataSource {
+        return retrofit.create(DoorsRemoteDataSource::class.java)
+    }
 
     val camerasViewModelFactory = CamerasViewModelFactory(
         camerasRepository,

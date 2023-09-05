@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.genzo.myhome.data.repositories.CamerasRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import com.genzo.myhome.data.repositories.CamerasRemoteDataSource
 
 class CamerasViewModel(
-    private val camerasRepository: CamerasRepository,
+    private val camerasRemoteDataSource: CamerasRemoteDataSource,
     private val uiDispatcher: CoroutineDispatcher,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
@@ -23,10 +23,12 @@ class CamerasViewModel(
 
     private fun getCameras() {
         viewModelScope.launch(ioDispatcher) {
-            val camerasList = camerasRepository.getCameras()
+            val response = camerasRemoteDataSource.sendRequest()
+
+            if (!response.success) return@launch
 
             viewModelScope.launch(uiDispatcher) {
-                _uiState.postValue(CamerasUiState(standaloneCameras = camerasList))
+                _uiState.postValue(CamerasUiState(standaloneCameras = response.data.cameras))
             }
         }
     }

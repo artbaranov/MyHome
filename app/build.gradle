@@ -92,6 +92,11 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
 
+    // Gson
+    def gson_version = "2.10.1"
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
     // Coroutines tests
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
 

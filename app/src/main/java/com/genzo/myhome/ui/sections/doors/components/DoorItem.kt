@@ -29,7 +29,7 @@ fun DoorItem(
     Card(modifier = modifier) {
         Box(modifier = Modifier.weight(1f)) {
 
-            if (door.snapshot.isNotEmpty()) {
+            if (!door.snapshot.isNullOrEmpty()) {
                 AsyncImage(
                     model = door.snapshot,
                     contentDescription = null,
