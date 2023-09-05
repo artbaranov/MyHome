@@ -29,7 +29,10 @@ class RootActivity : ComponentActivity() {
                 )
 
                 Scaffold(topBar = {
-                    TopBar(navController, navigationItems)
+                    TopBar(
+                        navController = navController,
+                        navigationItems = navigationItems
+                    )
                 }, content = {
                     NavHost(
                         modifier = Modifier.padding(it),

@@ -18,13 +18,25 @@ private val Circe = FontFamily(
 
 private val LargeTitle = TextStyle(
     fontFamily = Circe,
-    fontWeight = FontWeight.Light,
+    fontWeight = FontWeight.Normal,
     fontSize = 21.sp
 )
 
 private val TitleMedium = TextStyle(
     fontFamily = Circe,
+    fontWeight = FontWeight.Normal,
+    fontSize = 17.sp,
+)
+
+private val TitleSmall = TextStyle(
+    fontFamily = Circe,
     fontWeight = FontWeight.Light,
+    fontSize = 17.sp,
+)
+
+private val BodyMedium = TextStyle(
+    fontFamily = Circe,
+    fontWeight = FontWeight.Normal,
     fontSize = 17.sp,
 )
 
@@ -32,4 +44,6 @@ private val TitleMedium = TextStyle(
 val MyHomeTypography = Typography(
     titleLarge = LargeTitle,
     titleMedium = TitleMedium,
+    titleSmall = TitleSmall,
+    bodyMedium = BodyMedium,
 )

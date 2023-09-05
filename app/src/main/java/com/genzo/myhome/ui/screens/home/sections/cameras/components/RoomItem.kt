@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.genzo.myhome.R
 import com.genzo.myhome.data.entities.Camera
+import com.genzo.myhome.ui.theme.DeepCarminePink
 import com.genzo.myhome.ui.theme.MyHomeTheme
 
 @Composable
@@ -65,7 +66,7 @@ private fun CameraItem(
                 painter = painterResource(id = R.drawable.icon_play_button),
                 contentDescription = null,
                 modifier = Modifier.align(Alignment.Center),
-                tint = Color.White
+                tint = MyHomeTheme.colors.onSurfaceVariant1
             )
 
             if (camera.favorites) {
@@ -75,9 +76,8 @@ private fun CameraItem(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(top = 3.dp, end = 3.dp),
-                    tint = Color(0xFFE0BE35),
-
-                    )
+                    tint = MyHomeTheme.colors.onSurface,
+                )
             }
 
             if (camera.rec) {
@@ -87,7 +87,7 @@ private fun CameraItem(
                     modifier = Modifier
                         .padding(top = 8.dp, start = 8.dp)
                         .align(Alignment.TopStart),
-                    tint = Color.Red
+                    tint = Color.DeepCarminePink
                 )
             }
         }
@@ -101,7 +101,9 @@ private fun CameraItem(
                 text = camera.name,
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .padding(start = 16.dp, top = 22.dp, bottom = 20.dp)
+                    .padding(start = 16.dp, top = 22.dp, bottom = 20.dp),
+                color = MyHomeTheme.colors.onPrimary,
+                style = MyHomeTheme.typography.bodyMedium
             )
 
             Icon(
@@ -121,5 +123,10 @@ private fun Title(
     title: String,
     modifier: Modifier = Modifier
 ) {
-    Text(text = title, modifier = modifier, style = MyHomeTheme.typography.titleMedium)
+    Text(
+        text = title,
+        modifier = modifier,
+        style = MyHomeTheme.typography.titleSmall,
+        color = MyHomeTheme.colors.onPrimary
+    )
 }

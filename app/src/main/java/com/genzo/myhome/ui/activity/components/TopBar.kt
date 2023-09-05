@@ -32,7 +32,7 @@ import com.genzo.myhome.ui.theme.MyHomeTheme
 fun TopBar(
     navController: NavController,
     navigationItems: List<Screen>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         Title(
@@ -55,7 +55,8 @@ private fun Title(
         text = title,
         modifier = modifier,
         style = MyHomeTheme.typography.titleLarge,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
+        color = MyHomeTheme.colors.onPrimary,
     )
 }
 
@@ -122,7 +123,7 @@ private fun NavigationItem(
     val bottomBorderModifier = if (selected) {
         modifier.bottomBorder(1.dp, Color.Blue)
     } else {
-        modifier.bottomBorder(1.dp, Color.Gray)
+        modifier.bottomBorder(1.dp, Color.Gray.copy(0.1f))
     }
     Text(
         modifier = bottomBorderModifier
@@ -135,6 +136,7 @@ private fun NavigationItem(
             .padding(vertical = 10.dp),
         text = label,
         style = MyHomeTheme.typography.titleMedium,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
+        color = MyHomeTheme.colors.onPrimary,
     )
 }
