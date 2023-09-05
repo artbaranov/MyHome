@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyHome</string>
+
+    <string name="Home.Title">Мой дом</string>
+
+    <string name="Home.NavigationItem.Cameras">Камеры</string>
+    <string name="Home.NavigationItem.Doors">Двери</string>
+</resources>
