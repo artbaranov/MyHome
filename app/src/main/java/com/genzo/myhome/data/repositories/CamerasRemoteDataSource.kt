@@ -1,10 +1,11 @@
 package com.genzo.myhome.data.repositories
 
-import okhttp3.ResponseBody
+import com.genzo.myhome.data.entities.CameraServiceResponse
 import retrofit2.http.GET
+
 
 interface CamerasRemoteDataSource {
 
     @GET("/api/rubetek/cameras/")
-    suspend fun getCameras(): ResponseBody
+    suspend fun sendRequest(): CameraServiceResponse
 }

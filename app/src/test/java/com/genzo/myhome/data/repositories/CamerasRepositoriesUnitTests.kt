@@ -16,7 +16,7 @@ class CamerasRepositoriesUnitTests {
 
     @Test
     fun `getCameras returns a list of cameras`() = runTest {
-        val cameras = sut.getCameras()
+        val cameras = sut.sendRequest()
 
         assertEquals(20, cameras.size)
     }

@@ -23,10 +23,12 @@ class CamerasViewModel(
 
     private fun getCameras() {
         viewModelScope.launch(ioDispatcher) {
-            val camerasList = camerasRemoteDataSource.getCameras()
+            val response = camerasRemoteDataSource.sendRequest()
+
+            if (!response.success) return@launch
 
             viewModelScope.launch(uiDispatcher) {
-                _uiState.postValue(CamerasUiState(standaloneCameras = emptyList()))
+                _uiState.postValue(CamerasUiState(standaloneCameras = response.data.cameras))
             }
         }
     }

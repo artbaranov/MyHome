@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.genzo.myhome.data.repositories.DoorsRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import com.genzo.myhome.data.entities.CameraServiceResponse
 
 class DoorsViewModel(
     private val doorsRemoteDataSource: DoorsRemoteDataSource,
@@ -22,10 +23,12 @@ class DoorsViewModel(
 
     private fun getCameras() {
         viewModelScope.launch(ioDispatcher) {
-            val doors = doorsRemoteDataSource.getDoors()
+            val doors = doorsRemoteDataSource.sendRequest()
+
+            if (!doors.success) return@launch
 
             viewModelScope.launch(uiDispatcher) {
-                _uiState.postValue(DoorsUiState(standaloneDoors = doors))
+                _uiState.postValue(DoorsUiState(standaloneDoors = doors.data))
             }
         }
     }
