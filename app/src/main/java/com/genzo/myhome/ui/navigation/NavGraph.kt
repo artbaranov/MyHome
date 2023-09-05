@@ -40,7 +40,7 @@ private val cameras = listOf(
         snapshot = "https://serverspace.ru/wp-content/uploads/2019/06/backup-i-snapshot.png",
         room = "Room 1",
         id = 2,
-        favorites = true,
+        favorites = false,
         rec = true
     ),
 )

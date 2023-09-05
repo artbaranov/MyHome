@@ -11,3 +11,4 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val MainTextColor = Color(red = 51, 51, 51, 1)
+val StarColor = Color(0xFFE0BE35)
