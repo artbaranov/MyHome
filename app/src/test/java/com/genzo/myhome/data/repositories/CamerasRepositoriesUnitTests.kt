@@ -1,7 +1,5 @@
 package com.genzo.myhome.data.repositories
 
-import com.genzo.myhome.data.entities.repositories.CamerasRepository
-import com.genzo.myhome.data.entities.repositories.FakeCamerasRepository
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

@@ -9,15 +9,18 @@ import androidx.navigation.compose.composable
 import com.genzo.myhome.data.entities.Camera
 import com.genzo.myhome.data.entities.Room
 import com.genzo.myhome.ui.screens.home.sections.cameras.CamerasSection
+import com.genzo.myhome.ui.sections.cameras.viewModel.CamerasViewModel
 import com.genzo.myhome.ui.screens.home.sections.doors.DoorsSection
 
-fun NavGraphBuilder.navGraph() {
+fun NavGraphBuilder.navGraph(
+    camerasViewModel: CamerasViewModel,
+) {
     composable(Screen.CAMERAS.route) {
         CamerasSection(
+            viewModel = camerasViewModel,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 21.dp),
-            rooms = rooms
         )
     }
 

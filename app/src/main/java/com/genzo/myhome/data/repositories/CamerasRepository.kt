@@ -1,4 +1,4 @@
-package com.genzo.myhome.data.entities.repositories
+package com.genzo.myhome.data.repositories
 
 import com.genzo.myhome.data.entities.Camera
 import kotlinx.coroutines.delay
@@ -11,7 +11,7 @@ class FakeCamerasRepository : CamerasRepository {
     override suspend fun getCameras(): List<Camera> {
         val testList = arrayListOf<Camera>()
 
-        repeat(20) {
+        repeat(4) {
             delay(5)
             testList += Camera(
                 name = "Camera 1",
