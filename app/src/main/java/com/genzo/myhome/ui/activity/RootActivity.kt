@@ -48,7 +48,8 @@ class RootActivity : ComponentActivity() {
                         startDestination = Screen.CAMERAS.route
                     ) {
                         navGraph(
-                            camerasViewModel = appContainer.camerasViewModelFactory.create()
+                            camerasViewModel = appContainer.camerasViewModelFactory.create(),
+                            doorsViewModel = appContainer.doorsViewModelFactory.create(),
                         )
                     }
                 })
