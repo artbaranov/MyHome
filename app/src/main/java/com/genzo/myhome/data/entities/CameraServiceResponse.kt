@@ -1,5 +1,7 @@
 package com.genzo.myhome.data.entities
 
+import com.google.gson.annotations.SerializedName
+
 data class CameraServiceResponse(
     val success: Boolean,
     val data: CameraServiceData
@@ -7,7 +9,7 @@ data class CameraServiceResponse(
 
 data class DoorsServiceResponse(
     val success: Boolean,
-    val data: ArrayList<Door>
+    @SerializedName("data") val doors: ArrayList<Door>
 )
 
 class CameraServiceData(

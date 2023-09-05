@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface DoorsRemoteDataSource {
     @GET("/api/rubetek/doors/")
-    suspend fun sendRequest(): DoorsServiceResponse
+    suspend fun getDoors(): DoorsServiceResponse
 }
