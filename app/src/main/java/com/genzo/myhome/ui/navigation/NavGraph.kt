@@ -29,7 +29,7 @@ fun NavGraphBuilder.navGraph() {
 private val cameras = listOf(
     Camera(
         name = "Camera 1",
-        snapshot = "Snapshot 1",
+        snapshot = "https://serverspace.ru/wp-content/uploads/2019/06/backup-i-snapshot.png",
         room = "Room 1",
         id = 1,
         favorites = true,
@@ -37,7 +37,7 @@ private val cameras = listOf(
     ),
     Camera(
         name = "Camera 2",
-        snapshot = "Snapshot 2",
+        snapshot = "https://serverspace.ru/wp-content/uploads/2019/06/backup-i-snapshot.png",
         room = "Room 1",
         id = 2,
         favorites = true,
@@ -45,7 +45,7 @@ private val cameras = listOf(
     ),
     Camera(
         name = "Camera 3",
-        snapshot = "Snapshot 3",
+        snapshot = "https://serverspace.ru/wp-content/uploads/2019/06/backup-i-snapshot.png",
         room = "Room 1",
         id = 3,
         favorites = true,
@@ -53,7 +53,7 @@ private val cameras = listOf(
     ),
     Camera(
         name = "Camera 4",
-        snapshot = "Snapshot 4",
+        snapshot = "https://serverspace.ru/wp-content/uploads/2019/06/backup-i-snapshot.png",
         room = "Room 1",
         id = 4,
         favorites = true,
