@@ -9,6 +9,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.genzo.myhome.application.MyHomeApplication
+import com.genzo.myhome.di.AppContainer
 import com.genzo.myhome.ui.activity.components.TopBar
 import com.genzo.myhome.ui.navigation.Screen
 import com.genzo.myhome.ui.navigation.navGraph
@@ -19,6 +21,12 @@ class RootActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val appContainer = (application as MyHomeApplication).appContainer
+
+        setContent(appContainer)
+    }
+
+    private fun setContent(appContainer: AppContainer) {
         setContent {
             MyHomeTheme {
                 val navController = rememberNavController()
@@ -39,7 +47,9 @@ class RootActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.CAMERAS.route
                     ) {
-                        navGraph()
+                        navGraph(
+                            camerasViewModel = appContainer.camerasViewModelFactory.create()
+                        )
                     }
                 })
             }
