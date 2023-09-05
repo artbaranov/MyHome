@@ -91,4 +91,7 @@ dependencies {
 
     // Coroutines tests
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
+
+    // Livedata
+    implementation "androidx.compose.runtime:runtime-livedata:1.5.0"
 }
