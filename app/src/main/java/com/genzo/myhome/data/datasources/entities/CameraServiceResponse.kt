@@ -1,4 +1,4 @@
-package com.genzo.myhome.data.entities
+package com.genzo.myhome.data.datasources.entities
 
 import com.google.gson.annotations.SerializedName
 

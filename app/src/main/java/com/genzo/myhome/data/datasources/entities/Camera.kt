@@ -1,4 +1,4 @@
-package com.genzo.myhome.data.entities
+package com.genzo.myhome.data.datasources.entities
 
 data class Camera(
     val name: String,
