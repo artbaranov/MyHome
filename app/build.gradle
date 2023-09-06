@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'io.realm.kotlin'
 }
 
 android {
@@ -102,4 +103,7 @@ dependencies {
 
     // Livedata
     implementation "androidx.compose.runtime:runtime-livedata:1.5.0"
+
+    // Realm
+    implementation 'io.realm.kotlin:library-base:1.10.0'
 }
