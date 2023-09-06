@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.genzo.myhome.data.datasources.CamerasRemoteDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
-import com.genzo.myhome.data.repositories.CamerasRemoteDataSource
 
 class CamerasViewModel(
     private val camerasRemoteDataSource: CamerasRemoteDataSource,

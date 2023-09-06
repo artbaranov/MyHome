@@ -1,8 +1,8 @@
 package com.genzo.myhome.di.factories
 
 import androidx.lifecycle.ViewModel
-import com.genzo.myhome.data.repositories.CamerasRemoteDataSource
-import com.genzo.myhome.data.repositories.DoorsRemoteDataSource
+import com.genzo.myhome.data.datasources.CamerasRemoteDataSource
+import com.genzo.myhome.data.datasources.DoorsRemoteDataSource
 import com.genzo.myhome.ui.sections.cameras.viewModel.CamerasViewModel
 import com.genzo.myhome.ui.sections.doors.viewModel.DoorsViewModel
 import kotlinx.coroutines.CoroutineDispatcher

@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.genzo.myhome.R
-import com.genzo.myhome.data.entities.Camera
+import com.genzo.myhome.data.datasources.entities.Camera
 import com.genzo.myhome.ui.theme.DeepCarminePink
 import com.genzo.myhome.ui.theme.MyHomeTheme
 
