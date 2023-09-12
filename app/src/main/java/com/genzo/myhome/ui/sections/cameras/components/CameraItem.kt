@@ -38,84 +38,93 @@ fun CameraItem(
 ) {
     var offsetX by remember { mutableFloatStateOf(0f) }
 
-    Card(modifier = modifier
-        .offset { IntOffset(offsetX.roundToInt(), 0) }
-        .draggable(
-            onDragStarted = {
-                offsetX = 0f
-            },
-            onDragStopped = {
-                if (offsetX in -240f..240f) offsetX = 0f
-            },
-            orientation = Orientation.Horizontal,
-            state = rememberDraggableState { delta ->
-                Log.i("Delta", delta.toString())
-                if (offsetX in -250f..250f) {
-                    offsetX += delta
+    Box(modifier = modifier) {
+        Icon(
+            painterResource(id = R.drawable.icon_favorite_button),
+            contentDescription = null,
+            modifier = Modifier.align(Alignment.CenterEnd),
+            tint = MyHomeTheme.colors.onSurface,
+        )
+
+        Card(modifier = Modifier
+            .offset { IntOffset(offsetX.roundToInt(), 0) }
+            .draggable(
+                onDragStarted = {
+                    offsetX = 0f
+                },
+                onDragStopped = {
+                    if (offsetX in -65f..65f) offsetX = 0f
+                },
+                orientation = Orientation.Horizontal,
+                state = rememberDraggableState { delta ->
+                    Log.i("Delta", delta.toString())
+                    if (offsetX in -66f..66f) {
+                        offsetX += delta
+                    }
+                }
+            )) {
+            Box(modifier = Modifier.weight(1f)) {
+                AsyncImage(
+                    model = camera.snapshot,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f)
+                )
+
+                Icon(
+                    painter = painterResource(id = R.drawable.icon_play_button),
+                    contentDescription = null,
+                    modifier = Modifier.align(Alignment.Center),
+                    tint = MyHomeTheme.colors.onSurfaceVariant1
+                )
+
+                if (camera.favorites) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.icon_star_filled),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(top = 3.dp, end = 3.dp),
+                        tint = MyHomeTheme.colors.onSurface,
+                    )
+                }
+
+                if (camera.rec) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.icon_record_indicator),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 8.dp, start = 8.dp)
+                            .align(Alignment.TopStart),
+                        tint = Color.DeepCarminePink
+                    )
                 }
             }
-        )) {
-        Box(modifier = Modifier.weight(1f)) {
-            AsyncImage(
-                model = camera.snapshot,
-                contentDescription = null,
+
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1f)
-            )
+                    .background(Color.White),
+            ) {
+                Text(
+                    text = camera.name,
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = 16.dp, top = 22.dp, bottom = 20.dp),
+                    color = MyHomeTheme.colors.onPrimary,
+                    style = MyHomeTheme.typography.bodyMedium
+                )
 
-            Icon(
-                painter = painterResource(id = R.drawable.icon_play_button),
-                contentDescription = null,
-                modifier = Modifier.align(Alignment.Center),
-                tint = MyHomeTheme.colors.onSurfaceVariant1
-            )
-
-            if (camera.favorites) {
                 Icon(
-                    painter = painterResource(id = R.drawable.icon_star_filled),
+                    painter = painterResource(id = R.drawable.icon_shield),
                     contentDescription = null,
                     modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(top = 3.dp, end = 3.dp),
-                    tint = MyHomeTheme.colors.onSurface,
+                        .align(Alignment.CenterEnd)
+                        .padding(vertical = 26.dp)
+                        .padding(end = 28.dp)
                 )
             }
-
-            if (camera.rec) {
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_record_indicator),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(top = 8.dp, start = 8.dp)
-                        .align(Alignment.TopStart),
-                    tint = Color.DeepCarminePink
-                )
-            }
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White),
-        ) {
-            Text(
-                text = camera.name,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(start = 16.dp, top = 22.dp, bottom = 20.dp),
-                color = MyHomeTheme.colors.onPrimary,
-                style = MyHomeTheme.typography.bodyMedium
-            )
-
-            Icon(
-                painter = painterResource(id = R.drawable.icon_shield),
-                contentDescription = null,
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(vertical = 26.dp)
-                    .padding(end = 28.dp)
-            )
         }
     }
 }
