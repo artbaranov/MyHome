@@ -1,5 +1,6 @@
 package com.genzo.myhome.di
 
+import android.content.Context
 import com.genzo.myhome.data.datasources.CamerasRemoteDataSource
 import com.genzo.myhome.data.datasources.DoorsRemoteDataSource
 import com.genzo.myhome.di.factories.CamerasViewModelFactory
@@ -8,12 +9,12 @@ import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AppContainer {
+class AppContainer(applicationContext: Context) {
+    
     private val retrofit = Retrofit.Builder()
         .baseUrl("http://cars.cprogroup.ru")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-
 
     private val camerasRepository = getCamerasAPI()
     private val doorsRepository = getDoorsApi()
