@@ -14,6 +14,7 @@ class AppContainer {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+
     private val camerasRepository = getCamerasAPI()
     private val doorsRepository = getDoorsApi()
 
