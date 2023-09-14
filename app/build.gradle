@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'realm-android'
 }
 
 android {
@@ -105,6 +104,11 @@ dependencies {
     // Livedata
     implementation "androidx.compose.runtime:runtime-livedata:1.5.0"
 
-    // Realm
-    implementation 'io.realm.kotlin:library-base:1.10.0'
+
+    // Room
+    def room_version = "2.5.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    kapt "androidx.room:room-compiler:$room_version"
 }
