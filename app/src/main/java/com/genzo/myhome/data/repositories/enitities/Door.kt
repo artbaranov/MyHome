@@ -11,5 +11,5 @@ data class Door(
     val snapshot: String,
     val favorites: Boolean,
     val locked: Boolean,
-    val room: String?,
+    val  room: String?,
 )
