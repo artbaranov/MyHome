@@ -5,13 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.genzo.myhome.data.datasources.DoorsRemoteDataSource
+import com.genzo.myhome.di.IoDispatcher
+import com.genzo.myhome.di.MainDispatcher
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DoorsViewModel(
+@HiltViewModel
+class DoorsViewModel @Inject constructor(
     private val doorsRemoteDataSource: DoorsRemoteDataSource,
-    private val uiDispatcher: CoroutineDispatcher,
-    private val ioDispatcher: CoroutineDispatcher,
+    @MainDispatcher private val uiDispatcher: CoroutineDispatcher,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _uiState: MutableLiveData<DoorsUiState> = MutableLiveData(DoorsUiState())
     val viewState: LiveData<DoorsUiState> = _uiState
