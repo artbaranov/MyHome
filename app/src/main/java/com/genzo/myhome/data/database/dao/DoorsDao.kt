@@ -10,6 +10,9 @@ interface DoorsDao {
     @Insert
     fun insert(door: Door)
 
+    @Insert
+    fun insertAll(doors: List<Door>)
+
     @Query("SELECT * FROM doors")
     fun getAll(): List<Door>
 }
