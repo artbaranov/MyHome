@@ -10,6 +10,9 @@ interface CamerasDao {
     @Insert
     fun insert(camera: Camera)
 
+    @Insert
+    fun insertAll(cameras: List<Camera>)
+
     @Query("SELECT * FROM cameras")
     fun getAll(): List<Camera>
 }

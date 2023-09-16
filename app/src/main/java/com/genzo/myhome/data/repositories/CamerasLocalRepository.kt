@@ -7,7 +7,8 @@ import javax.inject.Inject
 
 interface CamerasLocalRepository {
     suspend fun insertCamera(camera: Camera)
-    suspend fun getAllCameras(): List<Camera>
+    suspend fun getAll(): List<Camera>
+    suspend fun insertAll(cameras: List<Camera>)
 }
 
 class CamerasLocalRepositoryImpl @Inject constructor(
@@ -18,12 +19,20 @@ class CamerasLocalRepositoryImpl @Inject constructor(
         camerasDao.insert(dbCamera)
     }
 
-    override suspend fun getAllCameras(): List<Camera> {
+    override suspend fun getAll(): List<Camera> {
         val dbCameras = camerasDao.getAll()
 
         return dbCameras.map {
             CameraMapper.map(it)
         }
+    }
+
+    override suspend fun insertAll(cameras: List<Camera>) {
+        val dbCameras = cameras.map {
+            CameraMapper.map(it)
+        }
+
+        camerasDao.insertAll(dbCameras)
     }
 }
 
