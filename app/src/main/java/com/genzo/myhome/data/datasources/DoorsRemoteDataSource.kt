@@ -1,6 +1,6 @@
-package com.genzo.myhome.data.repositories
+package com.genzo.myhome.data.datasources
 
-import com.genzo.myhome.data.entities.DoorsServiceResponse
+import com.genzo.myhome.data.datasources.entities.DoorsServiceResponse
 import retrofit2.http.GET
 
 interface DoorsRemoteDataSource {

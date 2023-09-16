@@ -1,6 +1,6 @@
-package com.genzo.myhome.data.repositories
+package com.genzo.myhome.data.datasources
 
-import com.genzo.myhome.data.entities.CameraServiceResponse
+import com.genzo.myhome.data.datasources.entities.CameraServiceResponse
 import retrofit2.http.GET
 
 

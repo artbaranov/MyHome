@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.genzo.myhome.data.entities.Camera
+import com.genzo.myhome.data.datasources.entities.Camera
 import com.genzo.myhome.ui.theme.MyHomeTheme
 
 @Composable
