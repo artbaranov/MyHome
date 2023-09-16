@@ -10,7 +10,9 @@ interface CamerasLocalRepository {
     suspend fun getAllCameras(): List<Camera>
 }
 
-class CamerasLocalRepositoryImpl @Inject constructor(private val camerasDao: CamerasDao) : CamerasLocalRepository {
+class CamerasLocalRepositoryImpl @Inject constructor(
+    private val camerasDao: CamerasDao
+) : CamerasLocalRepository {
     override suspend fun insertCamera(camera: Camera) {
         val dbCamera = CameraMapper.map(camera)
         camerasDao.insert(dbCamera)
