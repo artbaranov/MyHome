@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.genzo.myhome.data.database.Database
 import com.genzo.myhome.data.database.dao.CamerasDao
+import com.genzo.myhome.data.database.dao.DoorsDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +25,12 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideCameraDao(database: Database): CamerasDao {
+    fun provideCamerasDao(database: Database): CamerasDao {
         return database.camerasDao()
+    }
+
+    @Provides
+    fun provideDoorsDao(database: Database): DoorsDao {
+        return database.doorsDao()
     }
 }
