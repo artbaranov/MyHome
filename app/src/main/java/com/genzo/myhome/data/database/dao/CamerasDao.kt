@@ -8,8 +8,8 @@ import com.genzo.myhome.data.repositories.enitities.Camera
 @Dao
 interface CamerasDao {
     @Insert
-    suspend fun insert(camera: Camera)
+    fun insert(camera: Camera)
 
     @Query("SELECT * FROM cameras")
-    suspend fun getAll(): List<Camera>
+    fun getAll(): List<Camera>
 }
