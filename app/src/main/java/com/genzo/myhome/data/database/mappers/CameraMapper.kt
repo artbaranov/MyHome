@@ -1,11 +1,11 @@
 package com.genzo.myhome.data.database.mappers
 
 import com.genzo.myhome.data.datasources.entities.Camera
-import com.genzo.myhome.data.repositories.enitities.Camera as dbCamera
+import com.genzo.myhome.data.repositories.enitities.Camera as DbCamera
 
 object CameraMapper {
-    fun map(camera: Camera): dbCamera {
-        return dbCamera(
+    fun map(camera: Camera): DbCamera {
+        return DbCamera(
             id = camera.id,
             favorite = camera.favorites,
             guarded = false,
@@ -15,13 +15,13 @@ object CameraMapper {
         )
     }
 
-    fun map(camera: dbCamera): Camera {
+    fun map(dbCamera: DbCamera): Camera {
         return Camera(
-            id = camera.id,
-            name = camera.title,
-            favorites = camera.favorite,
-            room = camera.room,
-            snapshot = camera.snapshot,
+            id = dbCamera.id,
+            name = dbCamera.title,
+            favorites = dbCamera.favorite,
+            room = dbCamera.room,
+            snapshot = dbCamera.snapshot,
             rec = false,
         )
     }
