@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.genzo.myhome.data.datasources.DoorsRemoteDataSource
-import com.genzo.myhome.data.repositories.DoorsLocalRepository
+import com.genzo.myhome.data.providers.DoorsProvider
 import com.genzo.myhome.di.IoDispatcher
 import com.genzo.myhome.di.MainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,10 +14,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DoorsViewModel @Inject constructor(
-    private val doorsLocalRepository: DoorsLocalRepository,
-    private val doorsRemoteDataSource: DoorsRemoteDataSource,
-    @MainDispatcher private val uiDispatcher: CoroutineDispatcher,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val doorsProvider: DoorsProvider,
+    @MainDispatcher
+    private val uiDispatcher: CoroutineDispatcher,
+    @IoDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _uiState: MutableLiveData<DoorsUiState> = MutableLiveData(DoorsUiState())
     val viewState: LiveData<DoorsUiState> = _uiState
@@ -29,20 +29,10 @@ class DoorsViewModel @Inject constructor(
 
     private fun getDoors() {
         viewModelScope.launch(ioDispatcher) {
-            val doorsFromRepository = doorsLocalRepository.getAll()
+            val doors = doorsProvider.provideDoors()
 
-            if (doorsFromRepository.isEmpty()) {
-                val response = doorsRemoteDataSource.getDoors()
-
-                if (!response.success) return@launch
-
-                viewModelScope.launch(uiDispatcher) {
-                    _uiState.postValue(DoorsUiState(standaloneDoors = response.doors))
-                }
-            } else {
-                viewModelScope.launch(uiDispatcher) {
-                    _uiState.postValue(DoorsUiState(standaloneDoors = doorsFromRepository))
-                }
+            viewModelScope.launch(uiDispatcher) {
+                _uiState.postValue(DoorsUiState(standaloneDoors = doors))
             }
         }
     }
