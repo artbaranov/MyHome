@@ -8,8 +8,8 @@ data class Door(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val title: String,
-    val snapshot: String,
+    val snapshot: String?,
     val favorites: Boolean,
     val locked: Boolean,
-    val  room: String?,
+    val room: String?,
 )
