@@ -1,7 +1,7 @@
 package com.genzo.myhome.ui.sections.doors.viewModel
 
-import com.genzo.myhome.data.entities.Door
-import com.genzo.myhome.data.entities.Room
+import com.genzo.myhome.data.datasources.entities.Door
+import com.genzo.myhome.data.datasources.entities.Room
 
 data class DoorsUiState(
     val rooms: List<Room> = emptyList(),

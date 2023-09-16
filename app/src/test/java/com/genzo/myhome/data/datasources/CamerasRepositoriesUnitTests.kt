@@ -1,4 +1,4 @@
-package com.genzo.myhome.data.repositories
+package com.genzo.myhome.data.datasources
 
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest

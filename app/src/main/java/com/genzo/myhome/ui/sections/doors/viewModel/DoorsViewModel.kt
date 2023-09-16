@@ -4,23 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.genzo.myhome.data.repositories.DoorsRemoteDataSource
+import com.genzo.myhome.data.datasources.DoorsRemoteDataSource
+import com.genzo.myhome.data.repositories.DoorsLocalRepository
+import com.genzo.myhome.di.IoDispatcher
+import com.genzo.myhome.di.MainDispatcher
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DoorsViewModel(
+@HiltViewModel
+class DoorsViewModel @Inject constructor(
+    private val doorsLocalRepository: DoorsLocalRepository,
     private val doorsRemoteDataSource: DoorsRemoteDataSource,
-    private val uiDispatcher: CoroutineDispatcher,
-    private val ioDispatcher: CoroutineDispatcher,
+    @MainDispatcher private val uiDispatcher: CoroutineDispatcher,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _uiState: MutableLiveData<DoorsUiState> = MutableLiveData(DoorsUiState())
     val viewState: LiveData<DoorsUiState> = _uiState
 
     init {
-        getCameras()
+        getDoors()
     }
 
-    private fun getCameras() {
+    private fun getDoors() {
         viewModelScope.launch(ioDispatcher) {
             val response = doorsRemoteDataSource.getDoors()
 

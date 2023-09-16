@@ -1,10 +1,10 @@
-package com.genzo.myhome.data.entities
+package com.genzo.myhome.data.datasources.entities
 
 data class Camera(
     val name: String,
     val snapshot: String,
-    val room: String,
-    val id: Int,
+    val room: String?,
+    val id: Long,
     val favorites: Boolean,
     val rec: Boolean,
 )
