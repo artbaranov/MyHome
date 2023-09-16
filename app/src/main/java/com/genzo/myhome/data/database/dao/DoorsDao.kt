@@ -8,8 +8,8 @@ import com.genzo.myhome.data.repositories.enitities.Door
 @Dao
 interface DoorsDao {
     @Insert
-    suspend fun insert(door: Door)
+    fun insert(door: Door)
 
     @Query("SELECT * FROM doors")
-    suspend fun getAll(): List<Door>
+    fun getAll(): List<Door>
 }
