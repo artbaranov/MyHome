@@ -3,7 +3,7 @@ package com.genzo.myhome.data.repositories.enitities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "doors")
 data class Door(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
@@ -11,5 +11,5 @@ data class Door(
     val snapshot: String,
     val favorites: Boolean,
     val locked: Boolean,
-    val room: String,
+    val room: String?,
 )
