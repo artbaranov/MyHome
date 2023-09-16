@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.genzo.myhome.data.datasources.CamerasRemoteDataSource
-import com.genzo.myhome.data.repositories.DoorsLocalRepository
+import com.genzo.myhome.data.repositories.CamerasLocalRepository
 import com.genzo.myhome.di.IoDispatcher
 import com.genzo.myhome.di.MainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CamerasViewModel @Inject constructor(
-    private val doorsLocalRepository: DoorsLocalRepository,
+    private val camerasLocalRepository: CamerasLocalRepository,
     private val camerasRemoteDataSource: CamerasRemoteDataSource,
     @MainDispatcher private val uiDispatcher: CoroutineDispatcher,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
@@ -30,12 +30,22 @@ class CamerasViewModel @Inject constructor(
 
     private fun getCameras() {
         viewModelScope.launch(ioDispatcher) {
-            val response = camerasRemoteDataSource.sendRequest()
+            val camerasFromRepository = camerasLocalRepository.getAll()
 
-            if (!response.success) return@launch
+            if (camerasFromRepository.isEmpty()) {
+                val response = camerasRemoteDataSource.sendRequest()
 
-            viewModelScope.launch(uiDispatcher) {
-                _uiState.postValue(CamerasUiState(standaloneCameras = response.data.cameras))
+                if (!response.success) return@launch
+
+                viewModelScope.launch(uiDispatcher) {
+                    _uiState.postValue(CamerasUiState(standaloneCameras = response.data.cameras))
+                }
+
+                camerasLocalRepository.insertAll(response.data.cameras)
+            } else {
+                viewModelScope.launch(uiDispatcher) {
+                    _uiState.postValue(CamerasUiState(standaloneCameras = camerasFromRepository))
+                }
             }
         }
     }

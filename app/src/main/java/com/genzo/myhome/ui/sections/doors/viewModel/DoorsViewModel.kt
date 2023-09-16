@@ -29,12 +29,20 @@ class DoorsViewModel @Inject constructor(
 
     private fun getDoors() {
         viewModelScope.launch(ioDispatcher) {
-            val response = doorsRemoteDataSource.getDoors()
+            val doorsFromRepository = doorsLocalRepository.getAll()
 
-            if (!response.success) return@launch
+            if (doorsFromRepository.isEmpty()) {
+                val response = doorsRemoteDataSource.getDoors()
 
-            viewModelScope.launch(uiDispatcher) {
-                _uiState.postValue(DoorsUiState(standaloneDoors = response.doors))
+                if (!response.success) return@launch
+
+                viewModelScope.launch(uiDispatcher) {
+                    _uiState.postValue(DoorsUiState(standaloneDoors = response.doors))
+                }
+            } else {
+                viewModelScope.launch(uiDispatcher) {
+                    _uiState.postValue(DoorsUiState(standaloneDoors = doorsFromRepository))
+                }
             }
         }
     }
