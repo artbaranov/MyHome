@@ -80,8 +80,13 @@ fun DoorItem(
                     ) {
                         onToFavoritesClicked(door)
                     },
-                painter = painterResource(id = R.drawable.icon_favorite_unfilled_button),
+                painter = if (door.favorites) {
+                    painterResource(id = R.drawable.icon_favorite_filled_button)
+                } else {
+                    painterResource(id = R.drawable.icon_favorite_unfilled_button)
+                },
                 contentDescription = null,
+                tint = MyHomeTheme.colors.onSurface,
             )
         }
         Card(modifier = Modifier
