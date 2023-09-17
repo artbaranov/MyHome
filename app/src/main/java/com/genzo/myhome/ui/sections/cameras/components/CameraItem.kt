@@ -3,6 +3,7 @@ package com.genzo.myhome.ui.sections.cameras.components
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
@@ -16,6 +17,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +41,8 @@ enum class DragAnchors {
 @Composable
 fun CameraItem(
     camera: Camera,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onToFavoritesClicked: (Camera) -> Unit,
 ) {
     val state = remember {
         AnchoredDraggableState(
@@ -64,8 +67,12 @@ fun CameraItem(
                 painterResource(id = R.drawable.icon_favorite_unfilled_button)
             },
             contentDescription = null,
-            modifier = Modifier.align(Alignment.CenterEnd),
             tint = MyHomeTheme.colors.onSurface,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .clickable {
+                    onToFavoritesClicked(camera)
+                },
         )
 
         Card(
