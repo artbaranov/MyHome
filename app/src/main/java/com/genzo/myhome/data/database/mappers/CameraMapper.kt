@@ -7,11 +7,12 @@ object CameraMapper {
     fun map(camera: Camera): DbCamera {
         return DbCamera(
             id = camera.id,
-            favorite = camera.favorites,
+            favorite = camera.favorite,
             guarded = false,
             room = camera.room,
             snapshot = camera.snapshot,
             title = camera.name,
+            recording = camera.recording,
         )
     }
 
@@ -19,10 +20,10 @@ object CameraMapper {
         return Camera(
             id = dbCamera.id,
             name = dbCamera.title,
-            favorites = dbCamera.favorite,
+            favorite = dbCamera.favorite,
             room = dbCamera.room,
             snapshot = dbCamera.snapshot,
-            rec = false,
+            recording = dbCamera.recording,
         )
     }
 }

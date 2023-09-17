@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.genzo.myhome.data.datasources.entities.Camera
 import com.genzo.myhome.data.providers.CamerasProvider
 import com.genzo.myhome.di.IoDispatcher
 import com.genzo.myhome.di.MainDispatcher
@@ -26,13 +27,35 @@ class CamerasViewModel @Inject constructor(
         getCameras()
     }
 
+    fun updateCameraFavoriteField(camera: Camera) {
+        val cameras = _uiState.value?.standaloneCameras?.toMutableList()
+
+        val cameraBeingUpdated = cameras?.find { it == camera } ?: return
+
+        val cameraBeingUpdatedIndex = cameras.indexOf(cameraBeingUpdated)
+
+        val updatedCamera = cameraBeingUpdated.copy(favorite = !cameraBeingUpdated.favorite)
+
+        cameras[cameraBeingUpdatedIndex] = updatedCamera
+
+        viewModelScope.launch(ioDispatcher) {
+            camerasProvider.updateCamera(updatedCamera)
+
+            updateUiStateWith(cameras)
+        }
+    }
+
     private fun getCameras() {
         viewModelScope.launch(ioDispatcher) {
             val cameras = camerasProvider.provideCameras()
 
-            viewModelScope.launch(uiDispatcher) {
-                _uiState.postValue(CamerasUiState(standaloneCameras = cameras))
-            }
+            updateUiStateWith(cameras)
+        }
+    }
+
+    private fun updateUiStateWith(cameras: List<Camera>) {
+        viewModelScope.launch(uiDispatcher) {
+            _uiState.postValue(CamerasUiState(standaloneCameras = cameras))
         }
     }
 }

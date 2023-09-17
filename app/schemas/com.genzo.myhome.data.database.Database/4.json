@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "96dd05f97cec095e79c7d10775d06661",
+    "version": 4,
+    "identityHash": "3b35e3b00a95631cd98fee93aa90b062",
     "entities": [
       {
         "tableName": "cameras",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `favorite` INTEGER NOT NULL, `guarded` INTEGER NOT NULL, `snapshot` TEXT NOT NULL, `room` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL, `favorite` INTEGER NOT NULL, `guarded` INTEGER NOT NULL, `snapshot` TEXT NOT NULL, `room` TEXT, `recording` INTEGER NOT NULL DEFAULT false)",
         "fields": [
           {
             "fieldPath": "id",
@@ -43,6 +43,13 @@
             "columnName": "room",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "recording",
+            "columnName": "recording",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "false"
           }
         ],
         "primaryKey": {
@@ -108,7 +115,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '96dd05f97cec095e79c7d10775d06661')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3b35e3b00a95631cd98fee93aa90b062')"
     ]
   }
 }

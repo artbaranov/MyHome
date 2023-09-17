@@ -15,11 +15,15 @@ val Color.Companion.Mustard: Color
 val Color.Companion.DeepCarminePink: Color
     get() = Color(0xFFFA3030)
 
+val Color.Companion.LightBlue: Color
+    get() = Color(0xFF03A9F4)
+
 class MyHomeColors(
     onPrimary: Color,
     onSurface: Color,
     onSurfaceVariant1: Color,
     onSurfaceVariant2: Color,
+    onSurfaceVariant3: Color,
     lightThemeEnabled: Boolean
 ) {
     var onPrimary by mutableStateOf(onPrimary, structuralEqualityPolicy())
@@ -34,6 +38,9 @@ class MyHomeColors(
     var onSurfaceVariant2 by mutableStateOf(onSurfaceVariant2, structuralEqualityPolicy())
         internal set
 
+    var onSurfaceVariant3 by mutableStateOf(onSurfaceVariant3, structuralEqualityPolicy())
+        internal set
+
     var lightThemeEnabled by mutableStateOf(lightThemeEnabled, structuralEqualityPolicy())
         internal set
 
@@ -42,12 +49,14 @@ class MyHomeColors(
         onSurface: Color = this.onSurface,
         onSurfaceVariant1: Color = this.onSurfaceVariant1,
         onSurfaceVariant2: Color = this.onSurfaceVariant2,
+        onSurfaceVariant3: Color = this.onSurfaceVariant3,
         lightThemeEnabled: Boolean = this.lightThemeEnabled,
     ): MyHomeColors = MyHomeColors(
         onPrimary,
         onSurface,
         onSurfaceVariant1,
         onSurfaceVariant2,
+        onSurfaceVariant3,
         lightThemeEnabled,
     )
 }
@@ -57,6 +66,7 @@ internal fun myHomeLightColors(): MyHomeColors = MyHomeColors(
     onSurface = Color.Mustard,
     onSurfaceVariant1 = Color.White,
     onSurfaceVariant2 = Color.DeepCarminePink,
+    onSurfaceVariant3 = Color.LightBlue,
     lightThemeEnabled = true
 )
 
@@ -65,5 +75,6 @@ internal fun myHomeDarkColors(): MyHomeColors = MyHomeColors(
     onSurface = Color.Mustard,
     onSurfaceVariant1 = Color.White,
     onSurfaceVariant2 = Color.DeepCarminePink,
+    onSurfaceVariant3 = Color.LightBlue,
     lightThemeEnabled = false
 )

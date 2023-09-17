@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.genzo.myhome.data.datasources.entities.Door
 import com.genzo.myhome.data.providers.DoorsProvider
 import com.genzo.myhome.di.IoDispatcher
 import com.genzo.myhome.di.MainDispatcher
@@ -27,13 +28,35 @@ class DoorsViewModel @Inject constructor(
         getDoors()
     }
 
+    fun updateDoorsFavoriteField(door: Door) {
+        val doors = _uiState.value?.standaloneDoors?.toMutableList()
+
+        val doorBeingUpdated = doors?.find { it == door } ?: return
+
+        val cameraBeingUpdatedIndex = doors.indexOf(doorBeingUpdated)
+
+        val updatedCamera = doorBeingUpdated.copy(favorites = !doorBeingUpdated.favorites)
+
+        doors[cameraBeingUpdatedIndex] = updatedCamera
+
+        viewModelScope.launch(ioDispatcher) {
+            doorsProvider.updateDoor(updatedCamera)
+
+            updateUiStateWith(doors)
+        }
+    }
+
     private fun getDoors() {
         viewModelScope.launch(ioDispatcher) {
             val doors = doorsProvider.provideDoors()
 
-            viewModelScope.launch(uiDispatcher) {
-                _uiState.postValue(DoorsUiState(standaloneDoors = doors))
-            }
+            updateUiStateWith(doors)
+        }
+    }
+
+    private fun updateUiStateWith(doors: List<Door>) {
+        viewModelScope.launch(uiDispatcher) {
+            _uiState.postValue(DoorsUiState(standaloneDoors = doors))
         }
     }
 }

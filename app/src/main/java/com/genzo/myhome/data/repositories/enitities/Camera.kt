@@ -1,5 +1,6 @@
 package com.genzo.myhome.data.repositories.enitities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -12,4 +13,6 @@ data class Camera(
     val guarded: Boolean,
     val snapshot: String,
     val room: String?,
+    @ColumnInfo(defaultValue = "false")
+    val recording: Boolean,
 )
