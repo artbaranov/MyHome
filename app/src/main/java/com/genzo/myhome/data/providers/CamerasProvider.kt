@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 interface CamerasProvider {
     suspend fun provideCameras(): List<Camera>
+    suspend fun updateCamera(camera: Camera)
 }
 
 class CamerasProviderImpl @Inject constructor(
@@ -27,5 +28,9 @@ class CamerasProviderImpl @Inject constructor(
         camerasLocalRepository.insertAll(camerasFromRemoteSource)
 
         return camerasFromRemoteSource
+    }
+
+    override suspend fun updateCamera(camera: Camera) {
+        camerasLocalRepository.updateCamera(camera)
     }
 }

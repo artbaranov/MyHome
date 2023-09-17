@@ -9,6 +9,7 @@ interface CamerasLocalRepository {
     suspend fun insertCamera(camera: Camera)
     suspend fun getAll(): List<Camera>
     suspend fun insertAll(cameras: List<Camera>)
+    suspend fun updateCamera(camera: Camera)
 }
 
 class CamerasLocalRepositoryImpl @Inject constructor(
@@ -33,6 +34,11 @@ class CamerasLocalRepositoryImpl @Inject constructor(
         }
 
         camerasDao.insertAll(dbCameras)
+    }
+
+    override suspend fun updateCamera(camera: Camera) {
+        val dbCamera = CameraMapper.map(camera)
+        camerasDao.update(dbCamera)
     }
 }
 
