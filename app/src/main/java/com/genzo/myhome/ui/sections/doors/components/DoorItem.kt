@@ -101,9 +101,9 @@ fun DoorItem(
             }
             .anchoredDraggable(state, Orientation.Horizontal)) {
 
-            Box(modifier = Modifier.weight(1f)) {
+            if (!door.snapshot.isNullOrEmpty()) {
+                Box(modifier = Modifier.weight(1f)) {
 
-                if (!door.snapshot.isNullOrEmpty()) {
                     AsyncImage(
                         model = door.snapshot,
                         contentDescription = null,
@@ -121,6 +121,7 @@ fun DoorItem(
                     )
                 }
             }
+
 
             Box(
                 modifier = Modifier
