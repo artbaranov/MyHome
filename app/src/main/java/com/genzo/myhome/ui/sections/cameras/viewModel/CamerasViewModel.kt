@@ -34,7 +34,7 @@ class CamerasViewModel @Inject constructor(
 
         val cameraBeingUpdatedIndex = cameras.indexOf(cameraBeingUpdated)
 
-        val updatedCamera = cameraBeingUpdated.copy(favorites = !cameraBeingUpdated.favorites)
+        val updatedCamera = cameraBeingUpdated.copy(favorite = !cameraBeingUpdated.favorite)
 
         cameras[cameraBeingUpdatedIndex] = updatedCamera
 

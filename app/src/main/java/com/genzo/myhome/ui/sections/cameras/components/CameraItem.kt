@@ -63,7 +63,7 @@ fun CameraItem(
         val interactionSource = remember { MutableInteractionSource() }
 
         Icon(
-            painter = if (camera.favorites) {
+            painter = if (camera.favorite) {
                 painterResource(id = R.drawable.icon_favorite_filled_button)
             } else {
                 painterResource(id = R.drawable.icon_favorite_unfilled_button)
@@ -108,7 +108,7 @@ fun CameraItem(
                     tint = MyHomeTheme.colors.onSurfaceVariant1
                 )
 
-                if (camera.favorites) {
+                if (camera.favorite) {
                     Icon(
                         painter = painterResource(id = R.drawable.icon_star_filled),
                         contentDescription = null,
