@@ -1,7 +1,9 @@
 package com.genzo.myhome.data.repositories
 
 import com.genzo.myhome.data.database.dao.DoorsDao
+import com.genzo.myhome.data.database.mappers.CameraMapper
 import com.genzo.myhome.data.database.mappers.DoorMapper
+import com.genzo.myhome.data.datasources.entities.Camera
 import com.genzo.myhome.data.datasources.entities.Door
 import javax.inject.Inject
 
@@ -9,6 +11,7 @@ interface DoorsLocalRepository {
     suspend fun insertDoor(door: Door)
     suspend fun insertAll(doors: List<Door>)
     suspend fun getAll(): List<Door>
+    suspend fun updateDoor(door: Door)
 }
 
 class DoorsLocalRepositoryImpl @Inject constructor(
@@ -34,5 +37,11 @@ class DoorsLocalRepositoryImpl @Inject constructor(
         return dbDoors.map {
             DoorMapper.map(it)
         }
+    }
+
+    override suspend fun updateDoor(door: Door) {
+        val dbDoor = DoorMapper.map(door)
+
+        doorsDao.update(dbDoor)
     }
 }

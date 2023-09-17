@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 interface DoorsProvider {
     suspend fun provideDoors(): List<Door>
+    suspend fun updateDoor(door: Door)
 }
 
 class DoorsProviderImpl @Inject constructor(
@@ -27,5 +28,9 @@ class DoorsProviderImpl @Inject constructor(
         doorsLocalRepository.insertAll(doorsFromRemoteSource)
 
         return doorsFromRemoteSource
+    }
+
+    override suspend fun updateDoor(door: Door) {
+        doorsLocalRepository.updateDoor(door)
     }
 }

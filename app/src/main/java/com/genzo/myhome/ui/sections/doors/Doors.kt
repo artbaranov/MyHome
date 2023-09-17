@@ -44,6 +44,7 @@ fun DoorsSection(
                         .heightIn(72.dp, 289.dp)
                         .fillMaxWidth()
                         .padding(vertical = 11.dp),
+                    onToFavoritesClicked = viewModel::updateDoorsFavoriteField,
                 )
             }
         }

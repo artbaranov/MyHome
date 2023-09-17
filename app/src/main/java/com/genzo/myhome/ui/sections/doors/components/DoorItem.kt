@@ -3,10 +3,12 @@ package com.genzo.myhome.ui.sections.doors.components
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +34,7 @@ import com.genzo.myhome.R
 import com.genzo.myhome.data.datasources.entities.Door
 import com.genzo.myhome.ui.theme.MyHomeTheme
 import kotlin.math.roundToInt
+
 enum class DragAnchors {
     Start,
     Center,
@@ -42,6 +45,7 @@ enum class DragAnchors {
 fun DoorItem(
     door: Door,
     modifier: Modifier = Modifier,
+    onToFavoritesClicked: (Door) -> Unit,
 ) {
     val state = remember {
         AnchoredDraggableState(
@@ -60,6 +64,8 @@ fun DoorItem(
     }
 
     Box(modifier = modifier) {
+        val interactionSource = remember { MutableInteractionSource() }
+
         Row(modifier = Modifier.align(Alignment.CenterEnd)) {
             Icon(
                 painter = painterResource(id = R.drawable.icon_edit_button),
@@ -67,6 +73,13 @@ fun DoorItem(
             )
             Spacer(modifier = Modifier.width(9.dp))
             Icon(
+                modifier = Modifier
+                    .clickable(
+                        indication = null,
+                        enabled = true, interactionSource = interactionSource
+                    ) {
+                        onToFavoritesClicked(door)
+                    },
                 painter = painterResource(id = R.drawable.icon_favorite_unfilled_button),
                 contentDescription = null,
             )
