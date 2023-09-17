@@ -70,6 +70,7 @@ fun DoorItem(
             Icon(
                 painter = painterResource(id = R.drawable.icon_edit_button),
                 contentDescription = null,
+                tint = MyHomeTheme.colors.onSurfaceVariant3,
             )
             Spacer(modifier = Modifier.width(9.dp))
             Icon(
@@ -149,6 +150,7 @@ fun DoorItem(
                 Icon(
                     painter = painterResource(id = R.drawable.icon_lock),
                     contentDescription = null,
+                    tint = MyHomeTheme.colors.onSurfaceVariant3,
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(vertical = 26.dp)

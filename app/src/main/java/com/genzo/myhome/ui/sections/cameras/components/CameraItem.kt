@@ -151,7 +151,8 @@ fun CameraItem(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(vertical = 26.dp)
-                        .padding(end = 28.dp)
+                        .padding(end = 28.dp),
+                    tint = MyHomeTheme.colors.onSurfaceVariant3,
                 )
             }
         }

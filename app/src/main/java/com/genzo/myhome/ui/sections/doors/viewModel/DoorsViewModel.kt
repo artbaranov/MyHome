@@ -4,12 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.genzo.myhome.data.datasources.entities.Camera
 import com.genzo.myhome.data.datasources.entities.Door
 import com.genzo.myhome.data.providers.DoorsProvider
 import com.genzo.myhome.di.IoDispatcher
 import com.genzo.myhome.di.MainDispatcher
-import com.genzo.myhome.ui.sections.cameras.viewModel.CamerasUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
