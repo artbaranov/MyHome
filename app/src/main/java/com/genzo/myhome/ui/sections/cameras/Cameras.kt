@@ -45,7 +45,7 @@ fun CamerasSection(
                         .height(280.dp)
                         .fillMaxWidth()
                         .padding(vertical = 11.dp),
-                    onToFavoritesClicked = viewModel::updateCameraStateBy
+                    onToFavoritesClicked = viewModel::updateCameraFavoriteField
                 )
             }
 

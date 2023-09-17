@@ -8,6 +8,7 @@ import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +18,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,6 +60,8 @@ fun CameraItem(
         }
     }
     Box(modifier = modifier) {
+        val interactionSource = remember { MutableInteractionSource() }
+
         Icon(
             painter = if (camera.favorites) {
                 painterResource(id = R.drawable.icon_favorite_filled_button)
@@ -70,7 +72,10 @@ fun CameraItem(
             tint = MyHomeTheme.colors.onSurface,
             modifier = Modifier
                 .align(Alignment.CenterEnd)
-                .clickable {
+                .clickable(
+                    indication = null,
+                    enabled = true, interactionSource = interactionSource
+                ) {
                     onToFavoritesClicked(camera)
                 },
         )
