@@ -67,7 +67,7 @@ fun DoorItem(
             )
             Spacer(modifier = Modifier.width(9.dp))
             Icon(
-                painter = painterResource(id = R.drawable.icon_favorite_button),
+                painter = painterResource(id = R.drawable.icon_favorite_unfilled_button),
                 contentDescription = null,
             )
         }

@@ -58,7 +58,11 @@ fun CameraItem(
     }
     Box(modifier = modifier) {
         Icon(
-            painterResource(id = R.drawable.icon_favorite_button),
+            painter = if (camera.favorites) {
+                painterResource(id = R.drawable.icon_favorite_filled_button)
+            } else {
+                painterResource(id = R.drawable.icon_favorite_unfilled_button)
+            },
             contentDescription = null,
             modifier = Modifier.align(Alignment.CenterEnd),
             tint = MyHomeTheme.colors.onSurface,
