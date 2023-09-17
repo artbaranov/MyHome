@@ -1,10 +1,12 @@
 package com.genzo.myhome.ui.sections.doors.components
 
-import android.util.Log
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.AnchoredDraggableState
+import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.gestures.anchoredDraggable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,10 +20,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,13 +32,32 @@ import com.genzo.myhome.R
 import com.genzo.myhome.data.datasources.entities.Door
 import com.genzo.myhome.ui.theme.MyHomeTheme
 import kotlin.math.roundToInt
+enum class DragAnchors {
+    Start,
+    Center,
+}
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DoorItem(
     door: Door,
     modifier: Modifier = Modifier,
 ) {
-    var offsetX by remember { mutableFloatStateOf(0f) }
+    val state = remember {
+        AnchoredDraggableState(
+            initialValue = DragAnchors.Center,
+            positionalThreshold = { distance: Float -> distance * 0.5f },
+            velocityThreshold = { 50f },
+            animationSpec = tween(),
+        ).apply {
+            updateAnchors(
+                DraggableAnchors {
+                    DragAnchors.Start at -250f
+                    DragAnchors.Center at 0f
+                }
+            )
+        }
+    }
 
     Box(modifier = modifier) {
         Row(modifier = Modifier.align(Alignment.CenterEnd)) {
@@ -54,22 +72,15 @@ fun DoorItem(
             )
         }
         Card(modifier = Modifier
-            .offset { IntOffset(offsetX.roundToInt(), 0) }
-            .draggable(
-                onDragStarted = {
-                    offsetX = 0f
-                },
-                onDragStopped = {
-                    if (offsetX in -130f..130f) offsetX = 0f
-                },
-                orientation = Orientation.Horizontal,
-                state = rememberDraggableState { delta ->
-                    Log.i("Delta", delta.toString())
-                    if (offsetX in -132f..132f) {
-                        offsetX += delta
-                    }
-                }
-            )) {
+            .offset {
+                IntOffset(
+                    x = state
+                        .requireOffset()
+                        .roundToInt(),
+                    y = 0,
+                )
+            }
+            .anchoredDraggable(state, Orientation.Horizontal)) {
 
             Box(modifier = Modifier.weight(1f)) {
 
