@@ -12,4 +12,5 @@ data class Camera(
     val guarded: Boolean,
     val snapshot: String,
     val room: String?,
+    val recording: Boolean,
 )

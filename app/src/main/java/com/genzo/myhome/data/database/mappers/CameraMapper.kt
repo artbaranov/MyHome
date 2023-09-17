@@ -12,6 +12,7 @@ object CameraMapper {
             room = camera.room,
             snapshot = camera.snapshot,
             title = camera.name,
+            recording = camera.recording,
         )
     }
 
@@ -22,7 +23,7 @@ object CameraMapper {
             favorites = dbCamera.favorite,
             room = dbCamera.room,
             snapshot = dbCamera.snapshot,
-            rec = false,
+            recording = dbCamera.recording,
         )
     }
 }

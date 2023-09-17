@@ -119,7 +119,7 @@ fun CameraItem(
                     )
                 }
 
-                if (camera.rec) {
+                if (camera.recording) {
                     Icon(
                         painter = painterResource(id = R.drawable.icon_record_indicator),
                         contentDescription = null,

@@ -6,5 +6,5 @@ data class Camera(
     val room: String?,
     val id: Long,
     val favorites: Boolean,
-    val rec: Boolean,
+    val recording: Boolean,
 )
