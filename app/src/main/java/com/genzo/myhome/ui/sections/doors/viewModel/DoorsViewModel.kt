@@ -30,11 +30,8 @@ class DoorsViewModel @Inject constructor(
 
     fun updateDoorsFavoriteField(door: Door) {
         val doors = _uiState.value?.standaloneDoors?.toMutableList()
-
         val doorBeingUpdated = doors?.find { it == door } ?: return
-
         val cameraBeingUpdatedIndex = doors.indexOf(doorBeingUpdated)
-
         val updatedCamera = doorBeingUpdated.copy(favorites = !doorBeingUpdated.favorites)
 
         doors[cameraBeingUpdatedIndex] = updatedCamera
@@ -49,7 +46,6 @@ class DoorsViewModel @Inject constructor(
     private fun getDoors() {
         viewModelScope.launch(ioDispatcher) {
             val doors = doorsProvider.provideDoors()
-
             updateUiStateWith(doors)
         }
     }
