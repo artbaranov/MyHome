@@ -55,46 +55,22 @@ fun DoorItem(
     )
 
     Box(modifier = modifier) {
-        val interactionSource = remember { MutableInteractionSource() }
 
-        Row(modifier = Modifier.align(Alignment.CenterEnd)) {
-            Icon(
-                painter = painterResource(id = R.drawable.icon_edit_button),
-                contentDescription = null,
-                tint = MyHomeTheme.colors.onSurfaceVariant3,
-            )
-            Spacer(modifier = Modifier.width(9.dp))
-            Icon(
-                modifier = Modifier
-                    .clickable(
-                        indication = null,
-                        enabled = true, interactionSource = interactionSource
-                    ) {
-                        onToFavoritesClicked(door)
-                    },
-                painter = if (door.favorites) {
-                    painterResource(id = R.drawable.icon_favorite_filled_button)
-                } else {
-                    painterResource(id = R.drawable.icon_favorite_unfilled_button)
-                },
-                contentDescription = null,
-                tint = MyHomeTheme.colors.onSurface,
-            )
-        }
+        Actions(
+            modifier = Modifier.align(Alignment.CenterEnd),
+            favorite = door.favorites,
+            onToFavoritesClicked = { onToFavoritesClicked(door) }
+        )
+
+        val horizontalIntOffset = draggableAnchorsState.requireOffset().roundToInt()
+        val verticalIntOffset = 0
+
         Card(modifier = Modifier
-            .offset {
-                IntOffset(
-                    x = draggableAnchorsState
-                        .requireOffset()
-                        .roundToInt(),
-                    y = 0,
-                )
-            }
+            .offset { IntOffset(x = horizontalIntOffset, y = verticalIntOffset) }
             .anchoredDraggable(draggableAnchorsState, Orientation.Horizontal)) {
 
             if (!door.snapshot.isNullOrEmpty()) {
                 Box(modifier = Modifier.weight(1f)) {
-
                     AsyncImage(
                         model = door.snapshot,
                         contentDescription = null,
@@ -150,5 +126,39 @@ fun DoorItem(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun Actions(
+    favorite: Boolean,
+    modifier: Modifier = Modifier,
+    onToFavoritesClicked: () -> Unit,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Row(modifier = modifier) {
+        Icon(
+            painter = painterResource(id = R.drawable.icon_edit_button),
+            contentDescription = null,
+            tint = MyHomeTheme.colors.onSurfaceVariant3,
+        )
+        Spacer(modifier = Modifier.width(9.dp))
+        Icon(
+            modifier = Modifier
+                .clickable(
+                    indication = null,
+                    enabled = true,
+                    interactionSource = interactionSource,
+                    onClick = onToFavoritesClicked
+                ),
+            painter = if (favorite) {
+                painterResource(id = R.drawable.icon_favorite_filled_button)
+            } else {
+                painterResource(id = R.drawable.icon_favorite_unfilled_button)
+            },
+            contentDescription = null,
+            tint = MyHomeTheme.colors.onSurface,
+        )
     }
 }

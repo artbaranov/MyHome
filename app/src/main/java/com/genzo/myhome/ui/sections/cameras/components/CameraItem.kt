@@ -51,36 +51,19 @@ fun CameraItem(
         }
     )
     Box(modifier = modifier) {
-        val interactionSource = remember { MutableInteractionSource() }
+        ToFavoritesButton(
+            modifier = Modifier.align(Alignment.CenterEnd),
+            favorite = camera.favorite,
+            onToFavoritesClicked = {
+                onToFavoritesClicked(camera)
+            })
 
-        Icon(
-            painter = if (camera.favorite) {
-                painterResource(id = R.drawable.icon_favorite_filled_button)
-            } else {
-                painterResource(id = R.drawable.icon_favorite_unfilled_button)
-            },
-            contentDescription = null,
-            tint = MyHomeTheme.colors.onSurface,
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .clickable(
-                    indication = null,
-                    enabled = true, interactionSource = interactionSource
-                ) {
-                    onToFavoritesClicked(camera)
-                },
-        )
+        val horizontalIntOffset = draggableAnchorsState.requireOffset().roundToInt()
+        val verticalIntOffset = 0
 
         Card(
             modifier = Modifier
-                .offset {
-                    IntOffset(
-                        x = draggableAnchorsState
-                            .requireOffset()
-                            .roundToInt(),
-                        y = 0,
-                    )
-                }
+                .offset { IntOffset(x = horizontalIntOffset, y = verticalIntOffset) }
                 .anchoredDraggable(draggableAnchorsState, Orientation.Horizontal)
         ) {
             Box(modifier = Modifier.weight(1f)) {
@@ -148,4 +131,32 @@ fun CameraItem(
             }
         }
     }
+}
+
+
+@Composable
+private fun ToFavoritesButton(
+    favorite: Boolean,
+    modifier: Modifier = Modifier,
+    onToFavoritesClicked: () -> Unit,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Icon(
+        painter = if (favorite) {
+            painterResource(id = R.drawable.icon_favorite_filled_button)
+        } else {
+            painterResource(id = R.drawable.icon_favorite_unfilled_button)
+        },
+        contentDescription = null,
+        tint = MyHomeTheme.colors.onSurface,
+        modifier = modifier
+            .clickable(
+                indication = null,
+                enabled = true,
+                interactionSource = interactionSource,
+                onClick = onToFavoritesClicked
+            ),
+    )
+
 }
