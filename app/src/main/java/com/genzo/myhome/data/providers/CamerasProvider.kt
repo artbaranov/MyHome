@@ -19,7 +19,7 @@ class CamerasProviderImpl @Inject constructor(
 
         if (camerasFromLocalRepository.isNotEmpty()) return camerasFromLocalRepository
 
-        val response = camerasRemoteDataSource.sendRequest()
+        val response = camerasRemoteDataSource.getCameras()
 
         if (!response.success) throw RequestFailed()
 
