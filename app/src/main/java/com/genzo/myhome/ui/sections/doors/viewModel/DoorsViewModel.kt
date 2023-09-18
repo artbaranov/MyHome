@@ -16,10 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DoorsViewModel @Inject constructor(
     private val doorsProvider: DoorsProvider,
-    @MainDispatcher
-    private val uiDispatcher: CoroutineDispatcher,
-    @IoDispatcher
-    private val ioDispatcher: CoroutineDispatcher,
+    @MainDispatcher private val uiDispatcher: CoroutineDispatcher,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _uiState: MutableLiveData<DoorsUiState> = MutableLiveData(DoorsUiState())
     val viewState: LiveData<DoorsUiState> = _uiState
