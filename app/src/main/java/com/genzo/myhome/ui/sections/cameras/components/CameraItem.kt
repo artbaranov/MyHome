@@ -50,6 +50,7 @@ fun CameraItem(
             DragAnchors.Center at 0f
         }
     )
+
     Box(modifier = modifier) {
         ToFavoritesButton(
             modifier = Modifier.align(Alignment.CenterEnd),
@@ -66,73 +67,91 @@ fun CameraItem(
                 .offset { IntOffset(x = horizontalIntOffset, y = verticalIntOffset) }
                 .anchoredDraggable(draggableAnchorsState, Orientation.Horizontal)
         ) {
-            Box(modifier = Modifier.weight(1f)) {
-                AsyncImage(
-                    model = camera.snapshot,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
-                )
+            Body(modifier = Modifier.weight(1f), camera = camera)
 
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_play_button),
-                    contentDescription = null,
-                    modifier = Modifier.align(Alignment.Center),
-                    tint = MyHomeTheme.colors.onSurfaceVariant1
-                )
-
-                if (camera.favorite) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.icon_star_filled),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(top = 3.dp, end = 3.dp),
-                        tint = MyHomeTheme.colors.onSurface,
-                    )
-                }
-
-                if (camera.recording) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.icon_record_indicator),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(top = 8.dp, start = 8.dp)
-                            .align(Alignment.TopStart),
-                        tint = Color.DeepCarminePink
-                    )
-                }
-            }
-
-            Box(
+            BottomContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.White),
-            ) {
-                Text(
-                    text = camera.name,
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(start = 16.dp, top = 22.dp, bottom = 20.dp),
-                    color = MyHomeTheme.colors.onPrimary,
-                    style = MyHomeTheme.typography.bodyMedium
-                )
-
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_shield),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(vertical = 26.dp)
-                        .padding(end = 28.dp),
-                    tint = MyHomeTheme.colors.onSurfaceVariant3,
-                )
-            }
+                camera = camera
+            )
         }
     }
 }
 
+@Composable
+private fun Body(
+    camera: Camera,
+    modifier: Modifier = Modifier,
+) {
+    Box(modifier = modifier) {
+        AsyncImage(
+            model = camera.snapshot,
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+        )
+
+        Icon(
+            painter = painterResource(id = R.drawable.icon_play_button),
+            contentDescription = null,
+            modifier = Modifier.align(Alignment.Center),
+            tint = MyHomeTheme.colors.onSurfaceVariant1
+        )
+
+        if (camera.favorite) {
+            Icon(
+                painter = painterResource(id = R.drawable.icon_star_filled),
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 3.dp, end = 3.dp),
+                tint = MyHomeTheme.colors.onSurface,
+            )
+        }
+
+        if (camera.recording) {
+            Icon(
+                painter = painterResource(id = R.drawable.icon_record_indicator),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(top = 8.dp, start = 8.dp)
+                    .align(Alignment.TopStart),
+                tint = Color.DeepCarminePink
+            )
+        }
+    }
+}
+
+@Composable
+private fun BottomContent(
+    camera: Camera,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier,
+    ) {
+        Text(
+            text = camera.name,
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .padding(start = 16.dp, top = 22.dp, bottom = 20.dp),
+            color = MyHomeTheme.colors.onPrimary,
+            style = MyHomeTheme.typography.bodyMedium
+        )
+
+        Icon(
+            painter = painterResource(id = R.drawable.icon_shield),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(vertical = 26.dp)
+                .padding(end = 28.dp),
+            tint = MyHomeTheme.colors.onSurfaceVariant3,
+        )
+    }
+}
 
 @Composable
 private fun ToFavoritesButton(
@@ -158,5 +177,4 @@ private fun ToFavoritesButton(
                 onClick = onToFavoritesClicked
             ),
     )
-
 }

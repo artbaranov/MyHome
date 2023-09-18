@@ -55,7 +55,6 @@ fun DoorItem(
     )
 
     Box(modifier = modifier) {
-
         Actions(
             modifier = Modifier.align(Alignment.CenterEnd),
             favorite = door.favorites,
@@ -69,63 +68,87 @@ fun DoorItem(
             .offset { IntOffset(x = horizontalIntOffset, y = verticalIntOffset) }
             .anchoredDraggable(draggableAnchorsState, Orientation.Horizontal)) {
 
-            if (!door.snapshot.isNullOrEmpty()) {
-                Box(modifier = Modifier.weight(1f)) {
-                    AsyncImage(
-                        model = door.snapshot,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(280.dp)
-                            .aspectRatio(1f)
-                    )
+            val snapshotUrl = door.snapshot
 
-                    Icon(
-                        painter = painterResource(id = R.drawable.icon_play_button),
-                        contentDescription = null,
-                        modifier = Modifier.align(Alignment.Center),
-                        tint = MyHomeTheme.colors.onSurfaceVariant1
-                    )
-                }
+            if (!snapshotUrl.isNullOrEmpty()) {
+                Snapshot(
+                    url = door.snapshot,
+                    modifier = Modifier.weight(1f)
+                )
             }
-
-
-            Box(
+            
+            BottomContent(
+                door = door,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.White),
-            ) {
-                Row(
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(start = 16.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = door.name,
-                        color = MyHomeTheme.colors.onPrimary,
-                        style = MyHomeTheme.typography.bodyMedium
-                    )
-                    if (door.favorites) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.icon_star_filled),
-                            contentDescription = null,
-                            tint = MyHomeTheme.colors.onSurface,
-                        )
-                    }
-                }
+                    .background(Color.White)
+            )
+        }
+    }
+}
 
+@Composable
+private fun Snapshot(
+    url: String?,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier) {
+        AsyncImage(
+            model = url,
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(280.dp)
+                .aspectRatio(1f)
+        )
+
+        Icon(
+            painter = painterResource(id = R.drawable.icon_play_button),
+            contentDescription = null,
+            modifier = Modifier.align(Alignment.Center),
+            tint = MyHomeTheme.colors.onSurfaceVariant1
+        )
+    }
+
+}
+
+@Composable
+private fun BottomContent(
+    door: Door,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier,
+    ) {
+        Row(
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .padding(start = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = door.name,
+                color = MyHomeTheme.colors.onPrimary,
+                style = MyHomeTheme.typography.bodyMedium
+            )
+            if (door.favorites) {
                 Icon(
-                    painter = painterResource(id = R.drawable.icon_lock),
+                    painter = painterResource(id = R.drawable.icon_star_filled),
                     contentDescription = null,
-                    tint = MyHomeTheme.colors.onSurfaceVariant3,
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(vertical = 26.dp)
-                        .padding(end = 28.dp)
+                    tint = MyHomeTheme.colors.onSurface,
                 )
             }
         }
+
+        Icon(
+            painter = painterResource(id = R.drawable.icon_lock),
+            contentDescription = null,
+            tint = MyHomeTheme.colors.onSurfaceVariant3,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(vertical = 26.dp)
+                .padding(end = 28.dp)
+        )
     }
 }
 
