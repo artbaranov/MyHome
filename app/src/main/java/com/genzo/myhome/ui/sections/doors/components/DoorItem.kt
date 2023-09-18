@@ -76,7 +76,7 @@ fun DoorItem(
                     modifier = Modifier.weight(1f)
                 )
             }
-            
+
             BottomContent(
                 door = door,
                 modifier = Modifier

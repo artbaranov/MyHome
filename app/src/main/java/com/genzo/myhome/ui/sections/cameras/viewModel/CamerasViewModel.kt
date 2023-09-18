@@ -29,11 +29,8 @@ class CamerasViewModel @Inject constructor(
 
     fun updateCameraFavoriteField(camera: Camera) {
         val cameras = _uiState.value?.standaloneCameras?.toMutableList()
-
         val cameraBeingUpdated = cameras?.find { it == camera } ?: return
-
         val cameraBeingUpdatedIndex = cameras.indexOf(cameraBeingUpdated)
-
         val updatedCamera = cameraBeingUpdated.copy(favorite = !cameraBeingUpdated.favorite)
 
         cameras[cameraBeingUpdatedIndex] = updatedCamera
@@ -48,7 +45,6 @@ class CamerasViewModel @Inject constructor(
     private fun getCameras() {
         viewModelScope.launch(ioDispatcher) {
             val cameras = camerasProvider.provideCameras()
-
             updateUiStateWith(cameras)
         }
     }
