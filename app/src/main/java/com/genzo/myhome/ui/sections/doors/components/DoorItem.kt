@@ -4,7 +4,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
@@ -32,13 +31,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.genzo.myhome.R
 import com.genzo.myhome.data.datasources.entities.Door
+import com.genzo.myhome.ui.states.DragAnchors
+import com.genzo.myhome.ui.states.rememberDraggableAnchoredState
 import com.genzo.myhome.ui.theme.MyHomeTheme
 import kotlin.math.roundToInt
-
-enum class DragAnchors {
-    Start,
-    Center,
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -47,21 +43,16 @@ fun DoorItem(
     modifier: Modifier = Modifier,
     onToFavoritesClicked: (Door) -> Unit,
 ) {
-    val state = remember {
-        AnchoredDraggableState(
-            initialValue = DragAnchors.Center,
-            positionalThreshold = { distance: Float -> distance * 0.5f },
-            velocityThreshold = { 50f },
-            animationSpec = tween(),
-        ).apply {
-            updateAnchors(
-                DraggableAnchors {
-                    DragAnchors.Start at -250f
-                    DragAnchors.Center at 0f
-                }
-            )
+    val draggableAnchorsState = rememberDraggableAnchoredState(
+        initialValue = DragAnchors.Center,
+        positionalThreshold = { distance: Float -> distance * 0.5f },
+        velocityThreshold = { 50f },
+        animationSpec = tween(),
+        anchors = DraggableAnchors {
+            DragAnchors.Start at -250f
+            DragAnchors.Center at 0f
         }
-    }
+    )
 
     Box(modifier = modifier) {
         val interactionSource = remember { MutableInteractionSource() }
@@ -93,13 +84,13 @@ fun DoorItem(
         Card(modifier = Modifier
             .offset {
                 IntOffset(
-                    x = state
+                    x = draggableAnchorsState
                         .requireOffset()
                         .roundToInt(),
                     y = 0,
                 )
             }
-            .anchoredDraggable(state, Orientation.Horizontal)) {
+            .anchoredDraggable(draggableAnchorsState, Orientation.Horizontal)) {
 
             if (!door.snapshot.isNullOrEmpty()) {
                 Box(modifier = Modifier.weight(1f)) {
