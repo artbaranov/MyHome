@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.genzo.myhome.data.datasources.entities.Camera
-import com.genzo.myhome.data.providers.CamerasProvider
+import com.genzo.myhome.data.repositories.CamerasRepository
 import com.genzo.myhome.di.IoDispatcher
 import com.genzo.myhome.di.MainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CamerasViewModel @Inject constructor(
-    private val camerasProvider: CamerasProvider,
+    private val camerasRepository: CamerasRepository,
     @MainDispatcher private val uiDispatcher: CoroutineDispatcher,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
@@ -36,7 +36,7 @@ class CamerasViewModel @Inject constructor(
         cameras[cameraBeingUpdatedIndex] = updatedCamera
 
         viewModelScope.launch(ioDispatcher) {
-            camerasProvider.updateCamera(updatedCamera)
+            camerasRepository.updateCamera(updatedCamera)
 
             updateUiStateWith(cameras)
         }
@@ -44,7 +44,7 @@ class CamerasViewModel @Inject constructor(
 
     private fun getCameras() {
         viewModelScope.launch(ioDispatcher) {
-            val cameras = camerasProvider.provideCameras()
+            val cameras = camerasRepository.provideCameras()
             updateUiStateWith(cameras)
         }
     }

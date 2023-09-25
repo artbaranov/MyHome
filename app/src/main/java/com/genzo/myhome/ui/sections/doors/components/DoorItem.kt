@@ -43,7 +43,7 @@ fun DoorItem(
     door: Door,
     modifier: Modifier = Modifier,
     onToFavoritesClicked: (Door) -> Unit,
-    onEditNameClicked: () -> Unit,
+    onEditNameClicked: (Door) -> Unit,
 ) {
     val density = LocalDensity.current
 
@@ -65,7 +65,7 @@ fun DoorItem(
             modifier = Modifier.align(Alignment.CenterEnd),
             favorite = door.favorites,
             onToFavoritesClicked = { onToFavoritesClicked(door) },
-            onEditNameClicked = onEditNameClicked
+            onEditNameClicked = { onEditNameClicked(door) }
         )
 
         val horizontalIntOffset = draggableAnchorsState.requireOffset().roundToInt()

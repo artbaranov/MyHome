@@ -1,4 +1,4 @@
-package com.genzo.myhome.data.repositories
+package com.genzo.myhome.data.repositories.local
 
 import com.genzo.myhome.data.database.dao.CamerasDao
 import com.genzo.myhome.data.database.mappers.CameraMapper

@@ -1,9 +1,9 @@
 package com.genzo.myhome.di
 
-import com.genzo.myhome.data.repositories.CamerasLocalRepository
-import com.genzo.myhome.data.repositories.CamerasLocalRepositoryImpl
-import com.genzo.myhome.data.repositories.DoorsLocalRepository
-import com.genzo.myhome.data.repositories.DoorsLocalRepositoryImpl
+import com.genzo.myhome.data.repositories.local.CamerasLocalRepository
+import com.genzo.myhome.data.repositories.local.CamerasLocalRepositoryImpl
+import com.genzo.myhome.data.repositories.local.DoorsLocalRepository
+import com.genzo.myhome.data.repositories.local.DoorsLocalRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

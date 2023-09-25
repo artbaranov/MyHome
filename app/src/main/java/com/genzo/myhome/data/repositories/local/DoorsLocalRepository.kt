@@ -1,9 +1,7 @@
-package com.genzo.myhome.data.repositories
+package com.genzo.myhome.data.repositories.local
 
 import com.genzo.myhome.data.database.dao.DoorsDao
-import com.genzo.myhome.data.database.mappers.CameraMapper
 import com.genzo.myhome.data.database.mappers.DoorMapper
-import com.genzo.myhome.data.datasources.entities.Camera
 import com.genzo.myhome.data.datasources.entities.Door
 import javax.inject.Inject
 

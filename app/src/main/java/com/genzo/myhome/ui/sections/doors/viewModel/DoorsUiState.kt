@@ -7,4 +7,5 @@ data class DoorsUiState(
     val rooms: List<Room> = emptyList(),
     val standaloneDoors: List<Door> = emptyList(),
     val editNameDialogVisible: Boolean = false,
+    val doorName: String = ""
 )

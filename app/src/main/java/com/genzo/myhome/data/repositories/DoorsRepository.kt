@@ -1,19 +1,27 @@
-package com.genzo.myhome.data.providers
+package com.genzo.myhome.data.repositories
 
 import com.genzo.myhome.data.datasources.DoorsRemoteDataSource
 import com.genzo.myhome.data.datasources.entities.Door
-import com.genzo.myhome.data.repositories.DoorsLocalRepository
+import com.genzo.myhome.data.repositories.local.DoorsLocalRepository
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import javax.inject.Inject
 
-interface DoorsProvider {
+interface DoorsRepository {
+    val events: SharedFlow<RepositoryEvent>
+
     suspend fun provideDoors(): List<Door>
     suspend fun updateDoor(door: Door)
 }
 
-class DoorsProviderImpl @Inject constructor(
+class DoorsRepositoryImpl @Inject constructor(
     private val doorsLocalRepository: DoorsLocalRepository,
     private val doorsRemoteDataSource: DoorsRemoteDataSource,
-) : DoorsProvider {
+) : DoorsRepository {
+    private val _events = MutableSharedFlow<RepositoryEvent>()
+    override val events: SharedFlow<RepositoryEvent> = _events.asSharedFlow()
+
     override suspend fun provideDoors(): List<Door> {
         val doorsFromLocalRepository = doorsLocalRepository.getAll()
 
