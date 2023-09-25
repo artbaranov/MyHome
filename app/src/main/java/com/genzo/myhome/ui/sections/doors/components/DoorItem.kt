@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -43,15 +44,19 @@ fun DoorItem(
     modifier: Modifier = Modifier,
     onToFavoritesClicked: (Door) -> Unit,
 ) {
+    val density = LocalDensity.current
+
+    val anchors = DraggableAnchors {
+        with(density) { DragAnchors.Start at -90.dp.toPx() }
+        with(density) { DragAnchors.Center at 0.dp.toPx() }
+    }
+
     val draggableAnchorsState = rememberDraggableAnchoredState(
         initialValue = DragAnchors.Center,
-        positionalThreshold = { distance: Float -> distance * 0.5f },
+        positionalThreshold = { with(density) { 0.dp.toPx() } },
         velocityThreshold = { 50f },
         animationSpec = tween(),
-        anchors = DraggableAnchors {
-            DragAnchors.Start at -250f
-            DragAnchors.Center at 0f
-        }
+        anchors = anchors
     )
 
     Box(modifier = modifier) {
