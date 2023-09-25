@@ -41,6 +41,19 @@ class DoorsViewModel @Inject constructor(
         }
     }
 
+    fun updateEditNameDialogVisibility() {
+        val editNameDialogVisibility = _uiState.value?.editNameDialogVisible ?: return
+        val updatedUiState = _uiState.value?.copy(editNameDialogVisible = !editNameDialogVisibility)
+
+        _uiState.postValue(updatedUiState)
+    }
+
+    fun hideEditNameDialog() {
+        val updatedUiState = _uiState.value?.copy(editNameDialogVisible = false)
+
+        _uiState.postValue(updatedUiState)
+    }
+
     private fun getDoors() {
         viewModelScope.launch(ioDispatcher) {
             val doors = doorsProvider.provideDoors()

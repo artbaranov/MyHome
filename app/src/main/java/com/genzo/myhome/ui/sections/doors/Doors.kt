@@ -7,14 +7,20 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.genzo.myhome.ui.sections.cameras.components.RoomItem
 import com.genzo.myhome.ui.sections.doors.components.DoorItem
 import com.genzo.myhome.ui.sections.doors.viewModel.DoorsViewModel
+import com.genzo.myhome.ui.theme.MyHomeTheme
 
 @Composable
 fun DoorsSection(
@@ -45,9 +51,40 @@ fun DoorsSection(
                         .fillMaxWidth()
                         .padding(vertical = 11.dp),
                     onToFavoritesClicked = viewModel::updateDoorsFavoriteField,
+                    onEditNameClicked = viewModel::updateEditNameDialogVisibility
                 )
             }
         }
+
+        if (uiState.value?.editNameDialogVisible == true) {
+            Dialog(
+                onDismissRequest = viewModel::hideEditNameDialog,
+                content = {
+                    Surface(
+                        color = MyHomeTheme.colors.onSurface,
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Column {
+                            Text(
+                                text = "Dialog Title",
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+                            Text(
+                                text = "Dialog Content",
+                                modifier = Modifier.padding(bottom = 16.dp)
+                            )
+                            Button(
+                                onClick = viewModel::hideEditNameDialog,
+                                modifier = Modifier.align(Alignment.End)
+                            ) {
+                                Text("Close")
+                            }
+                        }
+                    }
+                }
+            )
+        }
+
     }
 }
 

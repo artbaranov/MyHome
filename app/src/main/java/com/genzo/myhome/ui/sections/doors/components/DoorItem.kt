@@ -43,6 +43,7 @@ fun DoorItem(
     door: Door,
     modifier: Modifier = Modifier,
     onToFavoritesClicked: (Door) -> Unit,
+    onEditNameClicked: () -> Unit,
 ) {
     val density = LocalDensity.current
 
@@ -63,7 +64,8 @@ fun DoorItem(
         Actions(
             modifier = Modifier.align(Alignment.CenterEnd),
             favorite = door.favorites,
-            onToFavoritesClicked = { onToFavoritesClicked(door) }
+            onToFavoritesClicked = { onToFavoritesClicked(door) },
+            onEditNameClicked = onEditNameClicked
         )
 
         val horizontalIntOffset = draggableAnchorsState.requireOffset().roundToInt()
@@ -162,11 +164,19 @@ private fun Actions(
     favorite: Boolean,
     modifier: Modifier = Modifier,
     onToFavoritesClicked: () -> Unit,
+    onEditNameClicked: () -> Unit,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
     Row(modifier = modifier) {
         Icon(
+            modifier = Modifier
+                .clickable(
+                    indication = null,
+                    enabled = true,
+                    interactionSource = interactionSource,
+                    onClick = onEditNameClicked
+                ),
             painter = painterResource(id = R.drawable.icon_edit_button),
             contentDescription = null,
             tint = MyHomeTheme.colors.onSurfaceVariant3,
