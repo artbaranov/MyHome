@@ -1,9 +1,9 @@
 package com.genzo.myhome.di
 
-import com.genzo.myhome.data.providers.CamerasProvider
-import com.genzo.myhome.data.providers.CamerasProviderImpl
-import com.genzo.myhome.data.providers.DoorsProvider
-import com.genzo.myhome.data.providers.DoorsProviderImpl
+import com.genzo.myhome.data.repositories.CamerasRepository
+import com.genzo.myhome.data.repositories.CamerasRepositoryImpl
+import com.genzo.myhome.data.repositories.DoorsRepository
+import com.genzo.myhome.data.repositories.DoorsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,9 +15,9 @@ import javax.inject.Singleton
 abstract class DataProvidersModule {
     @Binds
     @Singleton
-    abstract fun bindCameraProvider(camerasProviderImpl: CamerasProviderImpl): CamerasProvider
+    abstract fun bindCameraProvider(camerasProviderImpl: CamerasRepositoryImpl): CamerasRepository
 
     @Binds
     @Singleton
-    abstract fun bindDoorsProvider(doorsProviderImpl: DoorsProviderImpl): DoorsProvider
+    abstract fun bindDoorsProvider(doorsProviderImpl: DoorsRepositoryImpl): DoorsRepository
 }

@@ -4,7 +4,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.AnchoredDraggableState
 import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
@@ -22,20 +21,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.genzo.myhome.R
 import com.genzo.myhome.data.datasources.entities.Camera
+import com.genzo.myhome.ui.states.DragAnchors
+import com.genzo.myhome.ui.states.rememberDraggableAnchoredState
 import com.genzo.myhome.ui.theme.DeepCarminePink
 import com.genzo.myhome.ui.theme.MyHomeTheme
 import kotlin.math.roundToInt
-
-enum class DragAnchors {
-    Start,
-    Center,
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -44,117 +41,145 @@ fun CameraItem(
     modifier: Modifier = Modifier,
     onToFavoritesClicked: (Camera) -> Unit,
 ) {
-    val state = remember {
-        AnchoredDraggableState(
-            initialValue = DragAnchors.Center,
-            positionalThreshold = { distance: Float -> distance * 0.5f },
-            velocityThreshold = { 50f },
-            animationSpec = tween(),
-        ).apply {
-            updateAnchors(
-                DraggableAnchors {
-                    DragAnchors.Start at -150f
-                    DragAnchors.Center at 0f
-                }
-            )
-        }
-    }
-    Box(modifier = modifier) {
-        val interactionSource = remember { MutableInteractionSource() }
+    val density = LocalDensity.current
 
-        Icon(
-            painter = if (camera.favorite) {
-                painterResource(id = R.drawable.icon_favorite_filled_button)
-            } else {
-                painterResource(id = R.drawable.icon_favorite_unfilled_button)
-            },
-            contentDescription = null,
-            tint = MyHomeTheme.colors.onSurface,
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .clickable(
-                    indication = null,
-                    enabled = true, interactionSource = interactionSource
-                ) {
-                    onToFavoritesClicked(camera)
-                },
-        )
+    val anchors = DraggableAnchors {
+        with(density) { DragAnchors.Start at -50.dp.toPx() }
+        with(density) { DragAnchors.Center at 0.dp.toPx() }
+    }
+
+    val draggableAnchorsState = rememberDraggableAnchoredState(
+        initialValue = DragAnchors.Center,
+        positionalThreshold = { distance: Float -> distance * 0.5f },
+        velocityThreshold = { 50f },
+        animationSpec = tween(),
+        anchors = anchors
+    )
+
+    Box(modifier = modifier) {
+        ToFavoritesButton(
+            modifier = Modifier.align(Alignment.CenterEnd),
+            favorite = camera.favorite,
+            onToFavoritesClicked = {
+                onToFavoritesClicked(camera)
+            })
+
+        val horizontalIntOffset = draggableAnchorsState.requireOffset().roundToInt()
+        val verticalIntOffset = 0
 
         Card(
             modifier = Modifier
-                .offset {
-                    IntOffset(
-                        x = state
-                            .requireOffset()
-                            .roundToInt(),
-                        y = 0,
-                    )
-                }
-                .anchoredDraggable(state, Orientation.Horizontal)
+                .offset { IntOffset(x = horizontalIntOffset, y = verticalIntOffset) }
+                .anchoredDraggable(draggableAnchorsState, Orientation.Horizontal)
         ) {
-            Box(modifier = Modifier.weight(1f)) {
-                AsyncImage(
-                    model = camera.snapshot,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
-                )
+            Body(modifier = Modifier.weight(1f), camera = camera)
 
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_play_button),
-                    contentDescription = null,
-                    modifier = Modifier.align(Alignment.Center),
-                    tint = MyHomeTheme.colors.onSurfaceVariant1
-                )
-
-                if (camera.favorite) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.icon_star_filled),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(top = 3.dp, end = 3.dp),
-                        tint = MyHomeTheme.colors.onSurface,
-                    )
-                }
-
-                if (camera.recording) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.icon_record_indicator),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(top = 8.dp, start = 8.dp)
-                            .align(Alignment.TopStart),
-                        tint = Color.DeepCarminePink
-                    )
-                }
-            }
-
-            Box(
+            BottomContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.White),
-            ) {
-                Text(
-                    text = camera.name,
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(start = 16.dp, top = 22.dp, bottom = 20.dp),
-                    color = MyHomeTheme.colors.onPrimary,
-                    style = MyHomeTheme.typography.bodyMedium
-                )
-
-                Icon(
-                    painter = painterResource(id = R.drawable.icon_shield),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(vertical = 26.dp)
-                        .padding(end = 28.dp),
-                    tint = MyHomeTheme.colors.onSurfaceVariant3,
-                )
-            }
+                camera = camera
+            )
         }
     }
+}
+
+@Composable
+private fun Body(
+    camera: Camera,
+    modifier: Modifier = Modifier,
+) {
+    Box(modifier = modifier) {
+        AsyncImage(
+            model = camera.snapshot,
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+        )
+
+        Icon(
+            painter = painterResource(id = R.drawable.icon_play_button),
+            contentDescription = null,
+            modifier = Modifier.align(Alignment.Center),
+            tint = MyHomeTheme.colors.onSurfaceVariant1
+        )
+
+        if (camera.favorite) {
+            Icon(
+                painter = painterResource(id = R.drawable.icon_star_filled),
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 3.dp, end = 3.dp),
+                tint = MyHomeTheme.colors.onSurface,
+            )
+        }
+
+        if (camera.recording) {
+            Icon(
+                painter = painterResource(id = R.drawable.icon_record_indicator),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(top = 8.dp, start = 8.dp)
+                    .align(Alignment.TopStart),
+                tint = Color.DeepCarminePink
+            )
+        }
+    }
+}
+
+@Composable
+private fun BottomContent(
+    camera: Camera,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier,
+    ) {
+        Text(
+            text = camera.name,
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .padding(start = 16.dp, top = 22.dp, bottom = 20.dp),
+            color = MyHomeTheme.colors.onPrimary,
+            style = MyHomeTheme.typography.bodyMedium
+        )
+
+        Icon(
+            painter = painterResource(id = R.drawable.icon_shield),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(vertical = 26.dp)
+                .padding(end = 28.dp),
+            tint = MyHomeTheme.colors.onSurfaceVariant3,
+        )
+    }
+}
+
+@Composable
+private fun ToFavoritesButton(
+    favorite: Boolean,
+    modifier: Modifier = Modifier,
+    onToFavoritesClicked: () -> Unit,
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+
+    Icon(
+        painter = if (favorite) {
+            painterResource(id = R.drawable.icon_favorite_filled_button)
+        } else {
+            painterResource(id = R.drawable.icon_favorite_unfilled_button)
+        },
+        contentDescription = null,
+        tint = MyHomeTheme.colors.onSurface,
+        modifier = modifier
+            .clickable(
+                indication = null,
+                enabled = true,
+                interactionSource = interactionSource,
+                onClick = onToFavoritesClicked
+            ),
+    )
 }

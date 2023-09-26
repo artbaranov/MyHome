@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.genzo.myhome.ui.sections.cameras.components.RoomItem
 import com.genzo.myhome.ui.sections.doors.components.DoorItem
+import com.genzo.myhome.ui.sections.doors.components.EditNameDialog
 import com.genzo.myhome.ui.sections.doors.viewModel.DoorsViewModel
 
 @Composable
@@ -45,8 +46,20 @@ fun DoorsSection(
                         .fillMaxWidth()
                         .padding(vertical = 11.dp),
                     onToFavoritesClicked = viewModel::updateDoorsFavoriteField,
+                    onEditNameClicked = viewModel::editDoor
                 )
             }
+        }
+
+        val doorName = uiState.value?.doorName ?: ""
+
+        if (uiState.value?.editNameDialogVisible == true) {
+            EditNameDialog(
+                name = doorName,
+                onNameChanged = viewModel::updateDoorName,
+                onDismissRequest = viewModel::hideEditNameDialog,
+                onSaveNewNameRequest = viewModel::saveUpdatedDoor,
+            )
         }
     }
 }

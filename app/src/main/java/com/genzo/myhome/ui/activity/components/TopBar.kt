@@ -66,7 +66,7 @@ private fun NavigationBar(
     navigationItems: List<Screen>,
     modifier: Modifier = Modifier
 ) {
-    Navigation(modifier = modifier) {
+    NavigationItemsRow(modifier = modifier) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
@@ -92,7 +92,7 @@ private fun NavigationBar(
 }
 
 @Composable
-private fun Navigation(
+private fun NavigationItemsRow(
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.Transparent,
     content: @Composable RowScope.() -> Unit
@@ -125,6 +125,7 @@ private fun NavigationItem(
     } else {
         modifier.bottomBorder(1.dp, Color.Gray.copy(0.1f))
     }
+
     Text(
         modifier = bottomBorderModifier
             .selectable(
