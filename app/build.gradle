@@ -114,8 +114,6 @@ dependencies {
     // Livedata
     implementation "androidx.compose.runtime:runtime-livedata:1.5.0"
 
-    implementation 'com.google.accompanist:accompanist-swiperefresh:0.27.0'
-
     // Room
     def room_version = "2.5.2"
     implementation "androidx.room:room-runtime:$room_version"
@@ -127,4 +125,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+
+    // Swipe Refresh
+    implementation 'com.google.accompanist:accompanist-swiperefresh:0.27.0'
 }
