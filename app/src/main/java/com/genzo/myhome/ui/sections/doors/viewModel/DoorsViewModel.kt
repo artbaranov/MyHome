@@ -35,12 +35,12 @@ class DoorsViewModel @Inject constructor(
 
         val cameraBeingUpdatedIndex = doors.indexOf(doorBeingUpdated)
 
-        val updatedDoor = doorBeingUpdated.copy(favorites = !doorBeingUpdated.favorites)
+        val updatedCamera = doorBeingUpdated.copy(favorites = !doorBeingUpdated.favorites)
 
-        doors[cameraBeingUpdatedIndex] = updatedDoor
+        doors[cameraBeingUpdatedIndex] = updatedCamera
 
         viewModelScope.launch(ioDispatcher) {
-            doorsProvider.updateDoor(updatedDoor)
+            doorsProvider.updateDoor(updatedCamera)
 
             updateUiStateWith(doors)
         }
