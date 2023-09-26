@@ -8,8 +8,17 @@ data class Door(
     val snapshot: String?,
 ) {
     override fun equals(other: Any?): Boolean {
-        if (other !is Door) throw Exception()
+        if (other !is Door) throw DoorEqualityException()
 
         return this.id == other.id
     }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (room?.hashCode() ?: 0)
+        result = 31 * result + id.hashCode()
+        return result
+    }
 }
+
+class DoorEqualityException : Exception()
