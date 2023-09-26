@@ -98,7 +98,7 @@ class DoorsViewModel @Inject constructor(
 
     private fun updateUiStateWith(doors: List<Door>) {
         viewModelScope.launch(uiDispatcher) {
-            _uiState.value = (DoorsUiState(standaloneDoors = doors))
+            _uiState.postValue((DoorsUiState(standaloneDoors = doors)))
         }
     }
 }
