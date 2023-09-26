@@ -42,16 +42,20 @@ class CamerasViewModel @Inject constructor(
         }
     }
 
-    private fun getCameras() {
+    fun getCameras() {
         viewModelScope.launch(ioDispatcher) {
+            _uiState.postValue(_uiState.value?.copy(camerasLoading = true))
+
             val cameras = camerasRepository.provideCameras()
+
             updateUiStateWith(cameras)
         }
     }
 
     private fun updateUiStateWith(cameras: List<Camera>) {
         viewModelScope.launch(uiDispatcher) {
-            _uiState.postValue(CamerasUiState(standaloneCameras = cameras))
+            _uiState.postValue(CamerasUiState(standaloneCameras = cameras, camerasLoading = false))
+
         }
     }
 }
