@@ -10,6 +10,7 @@ import com.genzo.myhome.di.IoDispatcher
 import com.genzo.myhome.di.MainDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +27,16 @@ class DoorsViewModel @Inject constructor(
 
     init {
         getDoors()
+    }
+
+    fun getDoors() {
+        viewModelScope.launch(ioDispatcher) {
+            _uiState.postValue(_uiState.value?.copy(doorsLoading = true))
+
+            val doors = doorsRepository.provideDoors()
+
+            updateUiStateWith(doors)
+        }
     }
 
     fun updateDoorsFavoriteField(door: Door) {
@@ -88,17 +99,9 @@ class DoorsViewModel @Inject constructor(
         updateUiStateWith(doors)
     }
 
-    private fun getDoors() {
-        viewModelScope.launch(ioDispatcher) {
-            val doors = doorsRepository.provideDoors()
-
-            updateUiStateWith(doors)
-        }
-    }
-
     private fun updateUiStateWith(doors: List<Door>) {
         viewModelScope.launch(uiDispatcher) {
-            _uiState.postValue((DoorsUiState(standaloneDoors = doors)))
+            _uiState.postValue((DoorsUiState(standaloneDoors = doors, doorsLoading = false)))
         }
     }
 }
