@@ -30,7 +30,7 @@ class DoorsViewModel @Inject constructor(
 
     fun updateDoorsFavoriteField(door: Door) {
         val doors = _uiState.value?.standaloneDoors?.toMutableList()
-        val doorBeingUpdated = doors?.find { it == door } ?: return
+        val doorBeingUpdated = doors?.find { it.id == door.id } ?: return
         val doorBeingUpdatedIndex = doors.indexOf(doorBeingUpdated)
         val updatedDoor = doorBeingUpdated.copy(favorites = !doorBeingUpdated.favorites)
 
@@ -80,7 +80,7 @@ class DoorsViewModel @Inject constructor(
 
     private fun updateUiStateWith(door: Door) {
         val doors = _uiState.value?.standaloneDoors?.toMutableList()
-        val doorBeingUpdated = doors?.find { it == door } ?: return
+        val doorBeingUpdated = doors?.find { it.id == door.id } ?: return
         val doorBeingUpdatedIndex = doors.indexOf(doorBeingUpdated)
 
         doors[doorBeingUpdatedIndex] = door
